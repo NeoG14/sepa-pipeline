@@ -1,0 +1,19 @@
+name: Etapa 0 - consultar catálogo
+
+on:
+  workflow_dispatch:   # solo manual, por ahora
+
+permissions:
+  contents: read
+
+jobs:
+  catalogo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Consultar catálogo del portal
+        run: python scripts/consultar_catalogo.py
