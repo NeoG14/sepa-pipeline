@@ -1,0 +1,7 @@
+sepa:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('SEPA_DATOS_DIR') }}/sepa.duckdb"
+      threads: 4
