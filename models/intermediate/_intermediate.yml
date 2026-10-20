@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: int_precios_dia
+    description: "Agregado diario por fecha, comercio, producto y provincia (sin Web ni sin provincia)"
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio || '|' || id_producto || '|' || provincia"
+    columns:
+      - name: fecha
+        data_tests:
+          - not_null
+      - name: id_comercio
+        data_tests:
+          - not_null
+      - name: id_producto
+        data_tests:
+          - not_null
+      - name: provincia
+        data_tests:
+          - not_null
+      - name: precio_lista_mediana
+        data_tests:
+          - not_null

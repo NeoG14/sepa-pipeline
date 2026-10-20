@@ -21,3 +21,5 @@ models:
   sepa:
     staging:
       +materialized: view
+    intermediate:
+      +materialized: table

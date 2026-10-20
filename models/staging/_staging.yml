@@ -16,3 +16,17 @@ models:
       - name: id_producto
         data_tests:
           - not_null
+
+  - name: stg_sucursales
+    description: "Sucursales por fecha. Una fila por fecha, comercio, bandera y sucursal"
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio || '|' || id_bandera || '|' || id_sucursal"
+    columns:
+      - name: fecha
+        data_tests:
+          - not_null
+      - name: id_sucursal
+        data_tests:
+          - not_null
