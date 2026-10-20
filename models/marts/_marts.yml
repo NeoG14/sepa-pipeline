@@ -46,3 +46,29 @@ models:
       - name: cadenas
         data_tests:
           - not_null
+  
+  - name: fct_canasta_nacional
+    description: >
+      Canasta nacional por fecha y cadena: productos observados y arrastrados (último precio de
+      hasta 7 días), si está completa y el total, que solo existe cuando está completa.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio"
+    columns:
+      - name: completa
+        data_tests:
+          - not_null
+
+  - name: fct_canasta_provincia
+    description: >
+      Ranking del día de las cadenas en cada provincia, sobre los productos de la canasta que
+      tienen todas las cadenas de esa provincia ese día.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || provincia || '|' || id_comercio"
+    columns:
+      - name: total
+        data_tests:
+          - not_null
