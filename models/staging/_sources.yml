@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: sepa
+    description: "Parquet diarios que genera la ingesta en la PC, uno por tabla y por fecha"
+    meta:
+      external_location: "read_parquet('{{ env_var('SEPA_DATOS_DIR') }}/parquet/fecha=*/{name}.parquet', hive_partitioning = true)"
+    tables:
+      - name: precios
+        description: "Un precio por fecha, sucursal y producto"
+      - name: productos
+        description: "Descripción y marca de cada producto, por fecha y comercio"
+      - name: sucursales
+        description: "Datos de cada sucursal, con la provincia normalizada"
+      - name: comercios
+        description: "Comercios y banderas"

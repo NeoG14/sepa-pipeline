@@ -16,3 +16,8 @@ seeds:
       +column_types:
         ean: varchar
         version: integer
+        
+models:
+  sepa:
+    staging:
+      +materialized: view

@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_precios
+    description: "Precios diarios por sucursal y producto (una vista sobre los Parquet)"
+    columns:
+      - name: fecha
+        data_tests:
+          - not_null
+      - name: id_comercio
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['15', '10', '11', '9', '12', '2', '13']
+      - name: id_producto
+        data_tests:
+          - not_null
