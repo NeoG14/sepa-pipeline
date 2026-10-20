@@ -16,3 +16,18 @@ models:
       - name: precio_lista_mediana
         data_tests:
           - not_null
+
+  - name: fct_precios_historial
+    description: >
+      Cada versión de precio con su período de validez (fecha_desde, fecha_hasta) y su estado:
+      reemplazado, vigente o no disponible (más de 7 días sin aparecer).
+    columns:
+      - name: estado
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['reemplazado', 'vigente', 'no disponible']
+      - name: ultima_fecha_vista
+        data_tests:
+          - not_null
