@@ -31,3 +31,18 @@ models:
       - name: ultima_fecha_vista
         data_tests:
           - not_null
+  - name: dim_productos
+    description: >
+      Un producto por clave (EAN sin ceros o "comercio-código"), con nombre, marca y texto de
+      búsqueda. Se arma con todas las fechas para conservar los productos que ya no se venden.
+    columns:
+      - name: clave
+        data_tests:
+          - unique
+          - not_null
+      - name: nombre
+        data_tests:
+          - not_null
+      - name: cadenas
+        data_tests:
+          - not_null

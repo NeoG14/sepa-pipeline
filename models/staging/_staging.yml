@@ -30,3 +30,16 @@ models:
       - name: id_sucursal
         data_tests:
           - not_null
+  - name: stg_productos
+    description: "Productos por fecha y comercio, con la clave comparable entre cadenas y la marca normalizada"
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio || '|' || id_producto"
+    columns:
+      - name: id_producto
+        data_tests:
+          - not_null
+      - name: clave
+        data_tests:
+          - not_null
