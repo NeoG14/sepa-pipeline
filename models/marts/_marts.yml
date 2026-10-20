@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: fct_precios_cambios
+    description: >
+      Historial de precios: una fila por cada cambio en un comercio, producto y provincia.
+      Cada fila vale desde fecha_desde hasta el día anterior al cambio siguiente.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "id_comercio || '|' || id_producto || '|' || provincia || '|' || fecha_desde"
+    columns:
+      - name: fecha_desde
+        data_tests:
+          - not_null
+      - name: precio_lista_mediana
+        data_tests:
+          - not_null
