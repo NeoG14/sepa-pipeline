@@ -99,9 +99,12 @@ def correr_dbt():
         return False
     estados = Counter(str(r.status) for r in resultado.result.results)
     problemas = [r.node.name for r in resultado.result.results if str(r.status) in ("error", "fail")]
+    avisos = [r.node.name for r in resultado.result.results if str(r.status) == "warn"]
     resumen = ", ".join(f"{estado} {n}" for estado, n in sorted(estados.items()))
     if resultado.success:
         log.info(f"dbt build OK en {time.monotonic() - inicio:,.0f} s | {resumen}")
+        if avisos:
+            log.warning(f"dbt avisos: {avisos}")
     else:
         log.error(f"dbt build con problemas en {time.monotonic() - inicio:,.0f} s | {resumen} | {problemas}")
     return resultado.success
