@@ -14,6 +14,7 @@ from pathlib import Path
 from ingesta import catalogo, config, registro
 from ingesta.descarga import TEMP_DIR, descargar_fecha
 from ingesta.procesar import copiar_a_drive, procesar_fecha
+from publicar.subir_marts import subir as subir_marts
 
 DIAS_SIN_DATOS_PARA_AVISAR = 3
 RAIZ_REPO = Path(__file__).resolve().parents[1]  # donde están dbt_project.yml y profiles.yml
@@ -109,6 +110,33 @@ def correr_dbt():
         log.error(f"dbt build con problemas en {time.monotonic() - inicio:,.0f} s | {resumen} | {problemas}")
     return resultado.success
 
+def cerrar_base_dbt():
+    """dbt-duckdb deja la base local abierta dentro de este proceso cuando termina, y DuckDB no deja
+    abrir el mismo archivo dos veces en un proceso: sin esto, la subida a MotherDuck falla con
+    "Unique file handle conflict". Usa un atributo interno de dbt-duckdb (_ENV), probado con la
+    versión 1.11.0 de requirements.txt: si una versión nueva lo cambia, se registra el error.
+    """
+    try:
+        from dbt.adapters.duckdb.connections import DuckDBConnectionManager
+        entorno = getattr(DuckDBConnectionManager, "_ENV", None)
+        if entorno is not None:
+            entorno.close()
+        DuckDBConnectionManager.close_all_connections()
+    except Exception:
+        log.exception("No se pudo cerrar la base que dejó abierta dbt")
+
+def subir_a_motherduck():
+    """Paso 10: copia los marts a MotherDuck para que GitHub Actions publique el sitio.
+
+    Si falla (por ejemplo, sin internet), el día igual queda procesado en la PC: se registra el
+    error y la próxima corrida lo vuelve a intentar.
+    """
+    try:
+        return subir_marts()
+    except Exception:
+        log.exception("No se pudieron subir los marts a MotherDuck")
+        return False
+
 
 def main():
     configurar_logging()
@@ -127,12 +155,18 @@ def main():
 
     fallidas = [z["fecha"] for z in pendientes if not procesar_pendiente(sesion, z)]
     dbt_ok = correr_dbt()
+    cerrar_base_dbt()
+    if dbt_ok:
+        subida_ok = subir_a_motherduck()
+    else:
+        log.warning("No se suben los marts a MotherDuck porque dbt falló: queda la copia anterior")
+        subida_ok = False
 
     ultima = registro.ultima_fecha_procesada()
     if ultima is None or (date.today() - ultima).days > DIAS_SIN_DATOS_PARA_AVISAR:
         log.warning(f"La última fecha procesada es {ultima}: hace más de {DIAS_SIN_DATOS_PARA_AVISAR} días sin datos nuevos")
     log.info(f"Fin | procesadas {len(pendientes) - len(fallidas)} | fallidas {[f.isoformat() for f in fallidas] or 'ninguna'}")
-    return 1 if fallidas or not dbt_ok else 0
+    return 1 if fallidas or not dbt_ok or not subida_ok else 0
 
 
 if __name__ == "__main__":
