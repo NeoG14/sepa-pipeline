@@ -72,3 +72,16 @@ models:
       - name: total
         data_tests:
           - not_null
+  
+  - name: fct_cobertura
+    description: >
+      Cobertura de cada cadena por provincia y día contra la mediana de los 28 días anteriores.
+      cobertura_baja marca los días por debajo del 80 %: ahí un pico de un día es efecto de muestra.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio || '|' || provincia"
+    columns:
+      - name: cobertura_baja
+        data_tests:
+          - not_null

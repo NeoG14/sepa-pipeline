@@ -45,3 +45,14 @@ models:
       - name: precio_lista_mediana
         data_tests:
           - not_null
+
+  - name: int_cobertura_dia
+    description: "Sucursales físicas que informaron precios, por fecha, cadena y provincia. Se guarda para siempre"
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || id_comercio || '|' || provincia"
+    columns:
+      - name: sucursales
+        data_tests:
+          - not_null
