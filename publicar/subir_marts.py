@@ -24,7 +24,7 @@ from ingesta import config
 
 BASE_NUBE = "sepa_nube"
 TABLAS = ["dim_productos", "fct_precios_historial", "fct_canasta_nacional", "fct_canasta_provincia", "canasta",
-          "fct_cobertura"]
+          "fct_cobertura", "cadenas"]
 log = logging.getLogger("ingesta")
 
 

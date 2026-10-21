@@ -1,11 +1,15 @@
 """Exporta los JSON que lee el sitio, desde la base sepa_nube de MotherDuck.
 
 Escribe en la carpeta de salida (por defecto sitio/datos):
-- meta.json: fecha del dato, fecha base de los días, fecha de publicación y columnas de cada lista.
+- meta.json: fecha del dato, fecha base de los días, fecha de publicación, nombre de cada cadena y
+  columnas de cada lista.
 - indice.json: un registro por producto con historia, para el buscador.
 - historia/NNN.json: unos 1.000 archivos. En cada uno, por producto, provincia y cadena, los cambios
   de la mediana del precio de lista como [día, precio] y el último día en que se vio. El archivo de
   cada producto sale de un hash fijo de la clave (crc32), así cae siempre en el mismo.
+- hoy/<provincia>.json: por producto, el precio de hoy en cada cadena de esa provincia y los cambios
+  de los últimos días (para los resultados del buscador: la tabla de precios por cadena, el gráfico
+  chico y "qué cambió"; el navegador baja solo el de la provincia elegida).
 - canasta.json: los productos de la canasta, la canasta nacional por día y el ranking por provincia.
 
 Los días son la cantidad de días desde la fecha base (números chicos ocupan menos que fechas).
@@ -35,6 +39,8 @@ import duckdb
 from ingesta import config
 
 ARCHIVOS_HISTORIA = 1000
+DIAS_NO_DISPONIBLE = 7
+DIAS_GRAFICO = 13  # días que muestra el gráfico chico de cada resultado (hoy incluido)
 RAIZ_REPO = Path(__file__).resolve().parents[1]
 SALIDA_POR_DEFECTO = RAIZ_REPO / "sitio" / "datos"
 
@@ -58,6 +64,47 @@ def escribir(ruta, datos):
     texto = json.dumps(datos, ensure_ascii=False, separators=(",", ":"))
     ruta.write_text(texto, encoding="utf-8")
     return len(texto.encode("utf-8"))
+
+
+def precios_de_hoy(historia, dia_dato, orden_cadenas):
+    """Por provincia: {clave: [precio de hoy en cada cadena, en el orden de orden_cadenas; 0 = no lo vende]}.
+
+    Si alguna cadena cambió el precio dentro del gráfico chico (los últimos DIAS_GRAFICO días), la
+    lista lleva un elemento más con esos cambios: [[posición de la cadena, hace cuántos días, precio
+    anterior], ...]. Con el precio de hoy y los cambios, el sitio arma hacia atrás la línea de cada
+    cadena. Ejemplo: [4200, 4300, 0, ..., [[1, 6, 4150]]] = la cadena 2 de la lista subió hace 6 días;
+    antes costaba 4150.
+
+    Solo cuentan las cadenas que siguen vendiendo el producto, vistas en los últimos
+    DIAS_NO_DISPONIBLE días. Es la foto de hoy: se reemplaza cada día y no crece con la historia
+    (~38 MB en total y ~0,85 MB comprimido la provincia más grande; medido el 21/10 con
+    scripts/medir_hoy_matriz.py).
+    """
+    posicion = {c: i for i, c in enumerate(orden_cadenas)}
+    primer_dia = dia_dato - (DIAS_GRAFICO - 1)
+    hoy, desconocidas = {}, set()
+    for productos in historia.values():
+        for clave, provincias in productos.items():
+            for provincia, cadenas in provincias.items():
+                vigentes = {c: linea for c, linea in cadenas.items()
+                            if dia_dato - linea["u"] <= DIAS_NO_DISPONIBLE}
+                desconocidas |= set(vigentes) - set(posicion)
+                vigentes = {c: linea for c, linea in vigentes.items() if c in posicion}
+                if not vigentes:
+                    continue
+                precios = [0] * len(orden_cadenas)
+                for c, linea in vigentes.items():
+                    precios[posicion[c]] = linea["p"][-1][1]
+                # Un cambio es un punto con otro antes (el primero de la línea no lo es), posterior al
+                # primer día del gráfico (un cambio ese mismo día solo fija el precio con que arranca)
+                cambios = [[posicion[c], dia_dato - linea["p"][k][0], linea["p"][k - 1][1]]
+                           for c, linea in vigentes.items()
+                           for k in range(1, len(linea["p"])) if linea["p"][k][0] > primer_dia]
+                hoy.setdefault(provincia, {})[clave] = precios + [cambios] if cambios else precios
+    if desconocidas:
+        log.warning(f"Cadenas que no están en la semilla cadenas.csv (no aparecen en hoy/*.json): "
+                    f"{sorted(desconocidas)}")
+    return hoy
 
 
 def conectar(local):
@@ -98,6 +145,8 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
                 SELECT v.* FROM vecinos v
                 LEFT JOIN fct_cobertura k
                   ON k.fecha = v.fecha_desde AND k.id_comercio = v.id_comercio AND k.provincia = v.provincia
+                -- coalesce: sin punto anterior o siguiente (el primero o el último de la línea), la
+                -- comparación da NULL y el WHERE descartaría la fila; así cuenta como "no es pico"
                 WHERE NOT coalesce(k.cobertura_baja
                                    AND v.fecha_despues = v.fecha_desde + 1
                                    AND v.precio_despues = v.precio_antes, false))
@@ -133,6 +182,14 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
             if clave in archivo_de
         ]
 
+        # Nombre de cada cadena (semilla cadenas.csv), para que el sitio no muestre números
+        nombres_cadenas = {id_comercio: {"nombre": nombre, "banderas": banderas}
+                           for id_comercio, nombre, banderas in
+                           con.execute("SELECT id_comercio, nombre, banderas FROM cadenas").fetchall()}
+        # Orden de las cadenas en hoy/*.json: por número de comercio. Va en meta.json para el sitio,
+        # así una cadena nueva en la semilla aparece sola, sin tocar app.js.
+        orden_cadenas = sorted(nombres_cadenas, key=int)
+
         canasta = {
             "productos": con.execute(
                 "SELECT ltrim(ean, '0'), nombre, grupo, rubro FROM canasta ORDER BY grupo, rubro").fetchall(),
@@ -156,15 +213,22 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
     bytes_historia = sum(escribir(salida / "historia" / f"{n:03d}.json", productos)
                          for n, productos in historia.items())
     bytes_indice = escribir(salida / "indice.json", indice)
+    bytes_hoy = sum(escribir(salida / "hoy" / f"{provincia}.json", productos)
+                    for provincia, productos in precios_de_hoy(historia, dia(fecha_dato), orden_cadenas).items())
     bytes_canasta = escribir(salida / "canasta.json", canasta)
     escribir(salida / "meta.json", {
         "fecha_dato": fecha_dato.isoformat(),
         "fecha_base": fecha_base.isoformat(),
         "dia_dato": dia(fecha_dato),
         "publicado": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "cadenas": nombres_cadenas,
+        "orden_cadenas": orden_cadenas,
+        "dias_grafico": DIAS_GRAFICO,
         "columnas": {
             "indice": ["clave", "nombre", "marca", "presentacion", "cadenas", "archivo"],
             "historia": "clave > provincia > cadena > {p: [[dia, precio], ...], u: ultimo dia visto}",
+            "hoy": "hoy/<provincia>.json: clave > [precio de hoy de cada cadena en orden_cadenas (0 = no lo vende), "
+                   "y si hubo cambios en los ultimos dias_grafico dias: [[posicion de la cadena, hace cuantos dias, precio anterior], ...]]",
             "canasta_productos": ["clave", "nombre", "grupo", "rubro"],
             "canasta_nacional": ["dia", "cadena", "total", "observados", "arrastrados", "completa"],
             "canasta_provincias": ["dia", "provincia", "cadena", "cadenas", "productos", "total", "puesto"],
@@ -174,7 +238,8 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
     puntos = sum(len(l["p"]) for a in historia.values() for p in a.values() for pr in p.values() for l in pr.values())
     log.info(f"JSON exportados en {time.monotonic() - inicio:,.0f} s -> {salida} | fecha del dato {fecha_dato} | "
              f"índice {len(indice):,} productos ({mb(bytes_indice):,.1f} MB) | historia {len(historia):,} archivos, "
-             f"{puntos:,} puntos ({mb(bytes_historia):,.1f} MB, {picos:,} quitados por picos de muestra) | canasta {mb(bytes_canasta) * 1024:,.0f} KB")
+             f"{puntos:,} puntos ({mb(bytes_historia):,.1f} MB, {picos:,} quitados por picos de muestra) | "
+             f"precios de hoy {mb(bytes_hoy):,.1f} MB | canasta {mb(bytes_canasta) * 1024:,.0f} KB")
     return True
 
 

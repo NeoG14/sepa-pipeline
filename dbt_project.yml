@@ -16,6 +16,9 @@ seeds:
       +column_types:
         ean: varchar
         version: integer
+    cadenas:
+      +column_types:
+        id_comercio: varchar
         
 models:
   sepa:
