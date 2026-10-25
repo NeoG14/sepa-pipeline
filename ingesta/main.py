@@ -14,6 +14,7 @@ from pathlib import Path
 from ingesta import catalogo, config, registro
 from ingesta.descarga import TEMP_DIR, descargar_fecha
 from ingesta.procesar import copiar_a_drive, procesar_fecha
+from publicar.disparar_workflow import disparar as disparar_workflow
 from publicar.subir_marts import subir as subir_marts
 
 DIAS_SIN_DATOS_PARA_AVISAR = 3
@@ -110,6 +111,7 @@ def correr_dbt():
         log.error(f"dbt build con problemas en {time.monotonic() - inicio:,.0f} s | {resumen} | {problemas}")
     return resultado.success
 
+
 def cerrar_base_dbt():
     """dbt-duckdb deja la base local abierta dentro de este proceso cuando termina, y DuckDB no deja
     abrir el mismo archivo dos veces en un proceso: sin esto, la subida a MotherDuck falla con
@@ -125,6 +127,7 @@ def cerrar_base_dbt():
     except Exception:
         log.exception("No se pudo cerrar la base que dejó abierta dbt")
 
+
 def subir_a_motherduck():
     """Paso 10: copia los marts a MotherDuck para que GitHub Actions publique el sitio.
 
@@ -135,6 +138,19 @@ def subir_a_motherduck():
         return subir_marts()
     except Exception:
         log.exception("No se pudieron subir los marts a MotherDuck")
+        return False
+
+
+def publicar_sitio():
+    """Paso 11: avisa a GitHub que publique el sitio con lo que ya está en MotherDuck.
+
+    Si falla (sin internet, token vencido), el sitio queda con los datos del día anterior: se
+    registra el error y la próxima corrida lo vuelve a intentar.
+    """
+    try:
+        return disparar_workflow()
+    except Exception:
+        log.exception("No se pudo disparar la publicación del sitio")
         return False
 
 
@@ -161,12 +177,17 @@ def main():
     else:
         log.warning("No se suben los marts a MotherDuck porque dbt falló: queda la copia anterior")
         subida_ok = False
+    if subida_ok:
+        publicado_ok = publicar_sitio()
+    else:
+        log.warning("No se publica el sitio porque la subida a MotherDuck no salió bien: queda la versión anterior")
+        publicado_ok = False
 
     ultima = registro.ultima_fecha_procesada()
     if ultima is None or (date.today() - ultima).days > DIAS_SIN_DATOS_PARA_AVISAR:
         log.warning(f"La última fecha procesada es {ultima}: hace más de {DIAS_SIN_DATOS_PARA_AVISAR} días sin datos nuevos")
     log.info(f"Fin | procesadas {len(pendientes) - len(fallidas)} | fallidas {[f.isoformat() for f in fallidas] or 'ninguna'}")
-    return 1 if fallidas or not dbt_ok or not subida_ok else 0
+    return 1 if fallidas or not dbt_ok or not subida_ok or not publicado_ok else 0
 
 
 if __name__ == "__main__":
