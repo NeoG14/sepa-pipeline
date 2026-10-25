@@ -293,7 +293,54 @@ async function mostrarEvolucion() {
   $("evolucion-resumen").textContent = `Cuánto subió o bajó el precio de cada cadena desde el ${fecha(primero)}.`;
   $("evolucion-nota").textContent =
     `Cada día se compara el precio de lista de cada cadena en ${nombre} con el del día anterior, producto por producto, y los cambios se acumulan. ` +
-    "Todos los productos con código de barras pesan lo mismo, sea caro o barato. No dice cuál cadena es más barata, sino cuánto cambió el precio de cada una. Sin promociones.";
+    "Todos los productos con código de barras pesan lo mismo, sea caro o barato. No dice cuál cadena es más barata, sino cuánto cambió el precio de cada una. " +
+    "La compra de $ 100.000 es un ejemplo: el mismo porcentaje dicho en pesos. Sin promociones.";
+
+  // Cambio acumulado de cada cadena en su último día con datos, de mayor a menor, y la mediana entre cadenas
+  const finales = series.map(s => ({ id: s.id, dia: s.puntos.at(-1)[0], cambio: s.puntos.at(-1)[1] - 100 }))
+    .sort((a, b) => b.cambio - a.cambio);
+  const valores = finales.map(f => f.cambio).sort((a, b) => a - b), m = valores.length;
+  const mediana = m % 2 ? valores[(m - 1) / 2] : (valores[m / 2 - 1] + valores[m / 2]) / 2;
+  const compra = v => "$\u00a0" + (Math.round(100000 * (1 + v / 100) / 100) * 100).toLocaleString("es-AR");
+  $("evolucion-cifra-valor").textContent = cambioTexto(mediana, 1);
+  $("evolucion-cifra-texto").textContent = m === 1
+    ? `cambió el precio de la única cadena con datos en ${nombre} entre el ${fecha(primero)} y el ${fecha(ultimo)}.`
+    : `es la mediana de las ${m} cadenas de ${nombre} entre el ${fecha(primero)} y el ${fecha(ultimo)}.`;
+  $("evolucion-compra").replaceChildren(
+    document.createTextNode(`Una compra que el ${fecha(primero)} costaba $\u00a0100.000, el ${fecha(ultimo)} cuesta unos `),
+    elemento("strong", null, compra(mediana)), document.createTextNode("."));
+  $("evolucion-col-cambio").textContent = `Desde el ${fecha(primero)}`;
+  $("evolucion-col-compra").textContent = "Compra de $\u00a0100.000";
+  $("evolucion-lista").replaceChildren(...finales.map(f => {
+    const tr = document.createElement("tr"), nombreCadena = document.createElement("td");
+    const punto = elemento("span", "punto-cadena-fijo");
+    punto.style.setProperty("--color", color(f.id));
+    nombreCadena.append(punto, document.createTextNode(cadena(f.id)));
+    if (f.dia < ultimo) nombreCadena.append(elemento("span", "nota-fila", ` datos hasta el ${fecha(f.dia)}`));
+    tr.append(nombreCadena, celda(cambioTexto(f.cambio, 1), "num"), celda(compra(f.cambio), "num"));
+    return tr;
+  }));
+
+  // Panel fijo debajo del gráfico con los valores del día señalado (en el celular un cartel flotante tapa las líneas)
+  const panelDia = $("evolucion-dia");
+  const panelVacio = () => panelDia.replaceChildren(elemento("span", "nota", "Tocá el gráfico para ver los valores de un día."));
+  panelVacio();
+  let diaPanel = null;
+  const mostrarPanel = ({ tooltip }) => {
+    if (!tooltip.opacity || !tooltip.dataPoints?.length) { diaPanel = null; panelVacio(); return; }
+    const dia = tooltip.dataPoints[0].parsed.x;
+    if (dia === diaPanel && panelDia.dataset.visibles === String(tooltip.dataPoints.length)) return;
+    diaPanel = dia;
+    panelDia.dataset.visibles = String(tooltip.dataPoints.length);
+    const lista = elemento("div", "panel-dia-valores");
+    for (const p of [...tooltip.dataPoints].sort((a, b) => b.parsed.y - a.parsed.y)) {
+      const item = elemento("span", "panel-dia-item"), punto = elemento("span", "punto-cadena-fijo");
+      punto.style.setProperty("--color", p.dataset.borderColor);
+      item.append(punto, document.createTextNode(`${p.dataset.label} ${cambioTexto(p.parsed.y, 1)}`));
+      lista.append(item);
+    }
+    panelDia.replaceChildren(elemento("strong", "panel-dia-fecha", fecha(dia)), lista);
+  };
 
 
   botonesCadenas($("evolucion-cadenas"), series.map(s => s.id), cadenasOcultas, "evolucion");
@@ -310,6 +357,7 @@ async function mostrarEvolucion() {
     options: {
       maintainAspectRatio: false, animation: false, parsing: false,
       interaction: { mode: "index", intersect: false },
+      layout: { padding: { right: 48 } },   // lugar para el valor de hoy al final de cada línea
       scales: {
         x: { type: "linear", min: primero, max: ultimo, ticks: { color: texto, stepSize: 1, callback: v => fecha(v) }, grid: { display: false } },
         y: { title: { display: true, text: `Cambio del precio desde el ${fecha(primero)}`, color: texto },
@@ -317,12 +365,32 @@ async function mostrarEvolucion() {
       },
       plugins: {
         legend: { display: false },
-        tooltip: { itemSort: (x, y) => y.parsed.y - x.parsed.y, callbacks: { title: items => fecha(items[0].parsed.x),
-                                label: i => `${i.dataset.label}: ${cambioTexto(i.parsed.y, 1)}` } },
+        tooltip: { enabled: false, external: mostrarPanel },
       },
     },
+    plugins: [valorFinal],
   });
 }
+
+// Escribe el cambio acumulado al final de cada línea visible, separando los que quedarían encimados
+const valorFinal = {
+  id: "valorFinal",
+  afterDatasetsDraw(chart) {
+    const { ctx, chartArea } = chart, items = [];
+    chart.data.datasets.forEach((d, i) => {
+      if (!chart.isDatasetVisible(i)) return;
+      const punto = chart.getDatasetMeta(i).data.at(-1);
+      if (punto) items.push({ y: punto.y, texto: cambioTexto(d.data.at(-1).y, 1), color: d.borderColor });
+    });
+    items.sort((a, b) => a.y - b.y);
+    for (let k = 1; k < items.length; k++) items[k].y = Math.max(items[k].y, items[k - 1].y + 13);
+    ctx.save();
+    ctx.font = "600 11px 'Source Sans 3', system-ui, sans-serif";
+    ctx.textBaseline = "middle";
+    for (const it of items) { ctx.fillStyle = it.color; ctx.fillText(it.texto, chartArea.right + 6, it.y); }
+    ctx.restore();
+  },
+};
 
 // --- precio por kilo --------------------------------------------------------------------------
 // datos/kilo/<provincia>.json: productos [[nombre, grupo]] y filas [posición del producto, cadena,
