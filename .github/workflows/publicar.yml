@@ -1,0 +1,56 @@
+name: Publicar sitio
+
+# Lee las tablas ya procesadas de MotherDuck, arma los JSON y publica el sitio en GitHub Pages.
+# Lo dispara la PC al terminar la corrida diaria (ver ingesta/main.py); también se puede correr a mano.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si llegan dos disparos seguidos, el segundo espera al primero y no se pisan.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # El exportador solo necesita duckdb (misma versión que en la PC, para hablar con MotherDuck).
+      - name: Instalar duckdb
+        run: pip install duckdb==1.5.6
+
+      - name: Exportar los JSON desde MotherDuck
+        env:
+          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+        run: python -m publicar.exportar_json
+
+      - name: Revisar la salida
+        run: |
+          test -f sitio/datos/meta.json
+          echo "Archivos en sitio/datos: $(find sitio/datos -type f | wc -l)"
+          du -sh sitio/datos
+          cat sitio/datos/meta.json | head -c 600
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sitio
+
+      - name: Publicar en GitHub Pages
+        id: despliegue
+        uses: actions/deploy-pages@v4
