@@ -19,7 +19,45 @@ seeds:
     cadenas:
       +column_types:
         id_comercio: varchar
-        
+    rubros_manuales:
+      +column_types:
+        clave: varchar
+        rubro: varchar
+        motivo: varchar
+    pesables_producto:
+      +column_types:
+        id_comercio: varchar
+        id_producto: varchar
+        factor_kg: double
+    rubros_llm:
+      +column_types:
+        clave: varchar
+        rubro: varchar
+    ingredientes:
+      +column_types:
+        ingrediente: varchar
+        unidad: varchar
+        rubro: varchar
+        incluye: varchar
+        excluye: varchar
+        tam_min: double
+        tam_max: double
+    recetas:
+      +column_types:
+        receta: varchar
+        porciones: integer
+        ingrediente: varchar
+        cantidad: double
+        unidad: varchar
+        fuente: varchar
+        opciones: varchar
+    ingrediente_producto:
+      +column_types:
+        id_comercio: varchar
+        id_producto: varchar
+        ingrediente: varchar
+        tamano: double
+
 models:
   sepa:
     staging:

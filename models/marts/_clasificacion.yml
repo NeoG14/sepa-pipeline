@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: clasificacion_productos
+    description: >
+      Rubro y grupo de cada producto. Gana la corrección manual (rubros_manuales); después, lo que dijo
+      DeepSeek (rubros_llm); si DeepSeek todavía no vio el producto, la clasificación automática: reglas
+      cuando todas las cadenas coinciden y el modelo para el resto. Lo que nadie resuelve queda sin rubro.
+    columns:
+      - name: clave
+        data_tests:
+          - unique
+          - not_null
+      - name: fuente
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['manual', 'deepseek', 'regla', 'modelo', 'sin clasificar']
+      - name: rubro
+        description: "null cuando la fuente es 'sin clasificar'"
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('rubros')
+                field: rubro
+      - name: grupo
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('rubros')
+                field: grupo
+      - name: version
+        data_tests:
+          - not_null
+
+seeds:
+  - name: rubros_manuales
+    description: "Correcciones manuales de rubro: clave, rubro y por qué. Ganan sobre todo lo demás."
+    columns:
+      - name: clave
+        data_tests:
+          - unique
+      - name: rubro
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('rubros')
+                field: rubro
+
+  - name: rubros_llm
+    description: >
+      Rubro que propone DeepSeek para cada producto (scripts/clasificar_catalogo_llm.py). Solo rubros de la
+      taxonomía: lo que DeepSeek no supo clasificar no está.
+    columns:
+      - name: clave
+        data_tests:
+          - unique
+          - not_null
+      - name: rubro
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('rubros')
+                field: rubro

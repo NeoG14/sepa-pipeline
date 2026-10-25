@@ -1,16 +1,23 @@
 """Exporta los JSON que lee el sitio, desde la base sepa_nube de MotherDuck.
 
 Escribe en la carpeta de salida (por defecto sitio/datos):
-- meta.json: fecha del dato, fecha base de los días, fecha de publicación, nombre de cada cadena y
-  columnas de cada lista.
-- indice.json: un registro por producto con historia, para el buscador.
+- meta.json: fecha del dato, fecha base de los días, fecha de publicación, nombre de cada cadena, la lista de
+  rubros ([rubro, grupo]) y columnas de cada lista.
+- indice.json: un registro por producto con historia, para el buscador. El último dato de cada registro es
+  el rubro, como posición en la lista `rubros` de meta.json (-1 = sin clasificar).
 - historia/NNN.json: unos 1.000 archivos. En cada uno, por producto, provincia y cadena, los cambios
   de la mediana del precio de lista como [día, precio] y el último día en que se vio. El archivo de
   cada producto sale de un hash fijo de la clave (crc32), así cae siempre en el mismo.
 - hoy/<provincia>.json: por producto, el precio de hoy en cada cadena de esa provincia y los cambios
   de los últimos días (para los resultados del buscador: la tabla de precios por cadena, el gráfico
   chico y "qué cambió"; el navegador baja solo el de la provincia elegida).
-- canasta.json: los productos de la canasta, la canasta nacional por día y el ranking por provincia.
+- canasta.json: los productos de la canasta básica, la canasta nacional por día y el ranking por
+  provincia (índice de precios sobre los productos que tienen todas las cadenas de cada provincia).
+- comparacion/<provincia>.json: los códigos de esos productos, del último día de cada provincia (la
+  lista de la página de la canasta; los precios salen de hoy/<provincia>.json).
+- kilo/<provincia>.json: el precio por kilo de los productos pesables, por cadena.
+- indice/<provincia>.json: el índice de precios de cada cadena (cuánto cambió su precio desde el primer día), de
+  fct_indice_cadena; ver publicar/indice_json.py.
 
 Los días son la cantidad de días desde la fecha base (números chicos ocupan menos que fechas).
 Solo se publica la mediana y solo cuando cambia: es lo que muestra el gráfico, y así la historia
@@ -37,6 +44,7 @@ from pathlib import Path
 import duckdb
 
 from ingesta import config
+from publicar import indice_json
 
 ARCHIVOS_HISTORIA = 1000
 DIAS_NO_DISPONIBLE = 7
@@ -173,14 +181,27 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
                 comercio, {"p": [], "u": dia(ultima)})
             linea["p"].append([dia(desde), precio(valor)])
 
+        # Lista de rubros (semilla rubros.csv): el índice guarda la posición en esta lista y no el nombre,
+        # para no repetirlo en decenas de miles de filas
+        rubros = [[rubro, grupo] for rubro, grupo in
+                  con.execute("SELECT rubro, grupo FROM rubros ORDER BY grupo, rubro").fetchall()]
+        posicion_rubro = {rubro: i for i, (rubro, _) in enumerate(rubros)}
+
         # Índice: solo productos que tienen historia
         archivo_de = {clave: n for n, productos in historia.items() for clave in productos}
-        indice = [
-            [clave, nombre, marca, presentacion, cadenas, archivo_de[clave]]
-            for clave, nombre, marca, presentacion, cadenas in con.execute(
-                "SELECT clave, nombre, marca, presentacion, cadenas FROM dim_productos ORDER BY clave").fetchall()
-            if clave in archivo_de
-        ]
+        indice, rubros_desconocidos = [], set()
+        for clave, nombre, marca, presentacion, cadenas, rubro in con.execute(
+                "SELECT clave, nombre, marca, presentacion, cadenas, rubro FROM dim_productos ORDER BY clave").fetchall():
+            if clave not in archivo_de:
+                continue
+            if rubro is not None and rubro not in posicion_rubro:
+                rubros_desconocidos.add(rubro)
+            indice.append([clave, nombre, marca, presentacion, cadenas, archivo_de[clave],
+                           posicion_rubro.get(rubro, -1)])
+        if rubros_desconocidos:
+            raise ValueError(f"dim_productos tiene rubros que no están en la semilla rubros: {sorted(rubros_desconocidos)}. "
+                             f"¿Se subió rubros a MotherDuck? (python -m publicar.subir_marts rubros dim_productos)")
+        con_rubro = sum(fila[6] >= 0 for fila in indice)
 
         # Nombre de cada cadena (semilla cadenas.csv), para que el sitio no muestre números
         nombres_cadenas = {id_comercio: {"nombre": nombre, "banderas": banderas}
@@ -189,6 +210,28 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
         # Orden de las cadenas en hoy/*.json: por número de comercio. Va en meta.json para el sitio,
         # así una cadena nueva en la semilla aparece sola, sin tocar app.js.
         orden_cadenas = sorted(nombres_cadenas, key=int)
+
+        # Qué cadenas hay en cada provincia (para el mapa de la portada y las columnas de los
+        # resultados): las que informaron desde alguna sucursal en los últimos DIAS_NO_DISPONIBLE días,
+        # la misma ventana que usa hoy/*.json. Así un domingo con menos sucursales no cambia el mapa.
+        cadenas_por_provincia = {
+            provincia: sorted(ids, key=int)
+            for provincia, ids in con.execute(f"""
+                SELECT provincia, list(DISTINCT id_comercio)
+                FROM fct_cobertura
+                WHERE provincia IS NOT NULL AND sucursales > 0
+                  AND fecha >= (SELECT max(fecha) FROM fct_cobertura) - INTERVAL {DIAS_NO_DISPONIBLE} DAY
+                GROUP BY provincia""").fetchall()}
+
+        # Productos de la comparación de cada provincia, el último día que tiene cada una: la misma
+        # tabla con que dbt arma el ranking, así la lista coincide con el "631 productos" del sitio
+        comparacion = {}
+        for provincia, clave in con.execute("""
+                SELECT provincia, clave FROM fct_canasta_provincia_productos
+                WHERE (provincia, fecha) IN (
+                    SELECT provincia, max(fecha) FROM fct_canasta_provincia_productos GROUP BY provincia)
+                ORDER BY provincia, clave""").fetchall():
+            comparacion.setdefault(provincia, []).append(clave)
 
         canasta = {
             "productos": con.execute(
@@ -199,11 +242,37 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
                     "SELECT fecha, id_comercio, total, productos_observados, productos_arrastrados, completa "
                     "FROM fct_canasta_nacional ORDER BY fecha, id_comercio").fetchall()],
             "provincias": [
-                [dia(f), provincia, cadena, cadenas, productos, precio(total), puesto]
-                for f, provincia, cadena, cadenas, productos, total, puesto in con.execute(
-                    "SELECT fecha, provincia, id_comercio, cadenas, productos_comparados, total, puesto "
+                [dia(f), provincia, cadena, cadenas, productos, indice, diferencia, puesto]
+                for f, provincia, cadena, cadenas, productos, indice, diferencia, puesto in con.execute(
+                    "SELECT fecha, provincia, id_comercio, cadenas, productos_comparados, indice, diferencia, puesto "
                     "FROM fct_canasta_provincia ORDER BY fecha, provincia, puesto").fetchall()],
+            "grupos": [
+                [dia(f), provincia, grupo, cadena, productos, indice, diferencia, puesto]
+                for f, provincia, grupo, cadena, productos, indice, diferencia, puesto in con.execute(
+                    "SELECT fecha, provincia, grupo, id_comercio, productos_comparados, indice, diferencia, puesto "
+                    "FROM fct_canasta_provincia_grupo ORDER BY provincia, grupo, puesto").fetchall()],
         }
+        # Precio por kilo: un archivo por provincia, con el último día de cada una
+        kilo = {}
+        for provincia, producto, grupo, cadena, productos, precio_kg, antes, promo, baja, con_promo in con.execute("""
+                SELECT provincia, producto, grupo, id_comercio, productos, precio_kg, antes_kg, promo_kg,
+                       baja_fuerte, con_promo
+                FROM fct_precio_kilo_provincia
+                ORDER BY provincia, grupo, producto, id_comercio""").fetchall():
+            archivo = kilo.setdefault(provincia, {"productos": [], "filas": []})
+            nombres = [p[0] for p in archivo["productos"]]
+            if producto not in nombres:
+                archivo["productos"].append([producto, grupo])
+                nombres.append(producto)
+            fila = [nombres.index(producto), cadena, productos, precio(precio_kg)]
+            if baja:
+                fila += [1, precio(antes)]
+            elif con_promo:
+                fila += [2, precio(promo)]
+            archivo["filas"].append(fila)
+
+        # Índice de precios de cada cadena: un archivo por provincia (ver publicar/indice_json.py)
+        indice_cadenas = indice_json.leer(con, dia)
     finally:
         con.close()
 
@@ -216,6 +285,10 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
     bytes_hoy = sum(escribir(salida / "hoy" / f"{provincia}.json", productos)
                     for provincia, productos in precios_de_hoy(historia, dia(fecha_dato), orden_cadenas).items())
     bytes_canasta = escribir(salida / "canasta.json", canasta)
+    bytes_comparacion = sum(escribir(salida / "comparacion" / f"{provincia}.json", claves)
+                            for provincia, claves in comparacion.items())
+    bytes_kilo = sum(escribir(salida / "kilo" / f"{provincia}.json", datos) for provincia, datos in kilo.items())
+    bytes_indice_cadenas = indice_json.escribir(salida, indice_cadenas)
     escribir(salida / "meta.json", {
         "fecha_dato": fecha_dato.isoformat(),
         "fecha_base": fecha_base.isoformat(),
@@ -223,23 +296,33 @@ def exportar(local=False, salida=SALIDA_POR_DEFECTO):
         "publicado": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "cadenas": nombres_cadenas,
         "orden_cadenas": orden_cadenas,
+        "rubros": rubros,
+        "cadenas_por_provincia": cadenas_por_provincia,
         "dias_grafico": DIAS_GRAFICO,
         "columnas": {
-            "indice": ["clave", "nombre", "marca", "presentacion", "cadenas", "archivo"],
+            "indice": ["clave", "nombre", "marca", "presentacion", "cadenas", "archivo", "rubro (posicion en rubros; -1 = sin clasificar)"],
             "historia": "clave > provincia > cadena > {p: [[dia, precio], ...], u: ultimo dia visto}",
+            "comparacion": "comparacion/<provincia>.json: lista de claves de los productos con que se compara la provincia",
             "hoy": "hoy/<provincia>.json: clave > [precio de hoy de cada cadena en orden_cadenas (0 = no lo vende), "
                    "y si hubo cambios en los ultimos dias_grafico dias: [[posicion de la cadena, hace cuantos dias, precio anterior], ...]]",
             "canasta_productos": ["clave", "nombre", "grupo", "rubro"],
             "canasta_nacional": ["dia", "cadena", "total", "observados", "arrastrados", "completa"],
-            "canasta_provincias": ["dia", "provincia", "cadena", "cadenas", "productos", "total", "puesto"],
+            "canasta_grupos": ["dia", "provincia", "grupo", "cadena", "productos", "indice", "diferencia", "puesto"],
+            "kilo": "kilo/<provincia>.json: productos [[nombre, grupo]] y filas [posicion del producto, cadena, productos, precio por kilo, tipo (1 baja fuerte, 2 promocion; sin tipo = normal), precio anterior o de promocion]",
+            "indice_cadenas": "indice/<provincia>.json: s = {cadena: [[dia, indice con base 100 el primer dia], ...]} y n = {cadena: mediana de productos por dia}",
         },
     })
     mb = lambda b: b / 1024 / 1024
     puntos = sum(len(l["p"]) for a in historia.values() for p in a.values() for pr in p.values() for l in pr.values())
     log.info(f"JSON exportados en {time.monotonic() - inicio:,.0f} s -> {salida} | fecha del dato {fecha_dato} | "
-             f"índice {len(indice):,} productos ({mb(bytes_indice):,.1f} MB) | historia {len(historia):,} archivos, "
+             f"índice {len(indice):,} productos, {con_rubro:,} con rubro ({mb(bytes_indice):,.1f} MB) | historia {len(historia):,} archivos, "
              f"{puntos:,} puntos ({mb(bytes_historia):,.1f} MB, {picos:,} quitados por picos de muestra) | "
-             f"precios de hoy {mb(bytes_hoy):,.1f} MB | canasta {mb(bytes_canasta) * 1024:,.0f} KB")
+             f"precios de hoy {mb(bytes_hoy):,.1f} MB | canasta {mb(bytes_canasta) * 1024:,.0f} KB | "
+             f"comparación {sum(map(len, comparacion.values())):,} productos en {len(comparacion)} provincias "
+             f"({mb(bytes_comparacion) * 1024:,.0f} KB) | "
+             f"kilo {len(kilo)} provincias ({mb(bytes_kilo) * 1024:,.0f} KB) | "
+             f"índice de cadenas {len(indice_cadenas)} provincias ({mb(bytes_indice_cadenas) * 1024:,.0f} KB)")
+
     return True
 
 

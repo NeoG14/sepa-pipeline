@@ -1,0 +1,86 @@
+grupo,rubro,descripcion,division_indec,estado
+Almacén,aceite,"Aceites comestibles (girasol, oliva, maíz, mezcla). No: aceite corporal ni de bebé (higiene personal y bebés)",Alimentos y bebidas no alcohólicas,existente
+Almacén,arroz,"Arroz de cualquier tipo, crudo. No: arroz con leche listo (postres lácteos)",Alimentos y bebidas no alcohólicas,existente
+Almacén,legumbres secas,"Lentejas, garbanzos, porotos y arvejas secos o partidos. No: en lata o frasco (conservas)",Alimentos y bebidas no alcohólicas,nuevo
+Almacén,fideos,"Pastas secas, fideos instantáneos y ramen. No: pastas frescas ni tapas (lácteos y refrigerados)",Alimentos y bebidas no alcohólicas,existente
+Almacén,harina,"Harinas de trigo, maíz y otras, polenta, rebozador",Alimentos y bebidas no alcohólicas,existente
+Almacén,azúcar,Azúcar común y mascabo,Alimentos y bebidas no alcohólicas,existente
+Almacén,endulzantes,"Edulcorantes líquidos, en polvo o en sobres, stevia",Alimentos y bebidas no alcohólicas,existente
+Almacén,yerba,"Yerba mate, también compuesta o con hierbas. No: mate cocido en saquitos (té e infusiones)",Alimentos y bebidas no alcohólicas,existente
+Almacén,café,"Café molido, en grano, instantáneo y en cápsulas",Alimentos y bebidas no alcohólicas,existente
+Almacén,té e infusiones,"Té, mate cocido, manzanilla y otras infusiones en saquitos o hebras",Alimentos y bebidas no alcohólicas,existente
+Almacén,cacao,Cacao en polvo y chocolate para taza,Alimentos y bebidas no alcohólicas,existente
+Almacén,cereales,"Cereales de desayuno, avena, granola, barras de cereal",Alimentos y bebidas no alcohólicas,existente
+Almacén,galletitas y tostadas,"Galletitas dulces y saladas, tostadas, grisines, bizcochos de grasa. No: alfajores",Alimentos y bebidas no alcohólicas,existente
+Almacén,alfajores,Alfajores sueltos o en caja,Alimentos y bebidas no alcohólicas,existente
+Almacén,golosinas,"Caramelos, chicles, chocolates, bombones, turrones, obleas bañadas, merengues envasados",Alimentos y bebidas no alcohólicas,existente
+Almacén,snacks,"Papas fritas de paquete, palitos, maní salado, chizitos",Alimentos y bebidas no alcohólicas,existente
+Almacén,frutos secos y semillas,"Nueces, almendras, pasas, mixes de frutos secos, semillas de chía o lino. No: maní salado (snacks)",Alimentos y bebidas no alcohólicas,nuevo
+Almacén,dulces y untables,"Mermeladas, jaleas, miel, dulce de membrillo o batata, cremas de maní o avellana. No: dulce de leche",Alimentos y bebidas no alcohólicas,existente
+Almacén,conservas,"Enlatados y frascos: tomate, legumbres, choclo, atún, aceitunas, frutas en almíbar",Alimentos y bebidas no alcohólicas,existente
+Almacén,caldos y sopas,"Caldos en cubo o en polvo, sopas instantáneas",Alimentos y bebidas no alcohólicas,existente
+Almacén,sal,"Sal fina, gruesa, marina, con o sin molinillo",Alimentos y bebidas no alcohólicas,existente
+Almacén,especias y condimentos,"Especias, pimienta, orégano, saborizadores, vinagre. No: un producto que solo viene condimentado (queso con pimienta es queso)",Alimentos y bebidas no alcohólicas,existente
+Almacén,aderezos,"Mayonesa, ketchup, mostaza, salsa golf, salsa de soja, aderezos para ensalada, dips envasados (guacamole, hummus)",Alimentos y bebidas no alcohólicas,existente
+Almacén,salsas listas,"Salsas para pastas listas, puré de tomate saborizado, salsas de cocina",Alimentos y bebidas no alcohólicas,existente
+Almacén,repostería y premezclas,"Premezclas (bizcochuelo, ñoquis, pizza), purés instantáneos, levadura, polvo de hornear, gelatina, flan en polvo, coberturas",Alimentos y bebidas no alcohólicas,renombrado (era repostería)
+Lácteos y refrigerados,leche,"Leche fluida y en polvo, entera, descremada, sin lactosa, chocolatada. No: fórmulas infantiles",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,yogur,"Yogur firme, batido, bebible y griego",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,bebida láctea,Bebidas lácteas y leches fermentadas que no son yogur,Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,postres lácteos,"Flanes, postres y arroz con leche listos, en pote",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,queso,"Quesos de todo tipo, también rallados, untables, especiados o por kilo, y ricota",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,manteca,Manteca,Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,margarina,Margarina,Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,crema de leche,"Crema de leche, para batir o cocinar",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,dulce de leche,"Dulce de leche clásico, repostero y light",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,huevos,Huevos frescos,Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,fiambres,"Jamón, salame, mortadela, salchichón, paleta, bondiola, paté; envasados o por kilo. No: embutidos para cocinar (chorizo, morcilla)",Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,salchichas,Salchichas tipo viena y frankfurt,Alimentos y bebidas no alcohólicas,existente
+Lácteos y refrigerados,tapas y pastas frescas,"Tapas de empanadas y tartas, pastas frescas refrigeradas. No: premezclas secas (repostería y premezclas)",Alimentos y bebidas no alcohólicas,existente
+Frutas y verduras,frutas,"Frutas frescas, sueltas o por kilo",Alimentos y bebidas no alcohólicas,nuevo
+Frutas y verduras,verduras,"Verduras y hortalizas frescas, también por atado o en bolsa, y ensaladas listas refrigeradas. No: congeladas (congelados)",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,carne vacuna,"Cortes vacunos (asado, vacío, bife, peceto, tapa, colita), carne picada",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,carne de cerdo,"Cortes de cerdo frescos (bondiola fresca, pechito, carré)",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,pollo,"Pollo entero y en presas, milanesas de pollo frescas",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,pescados y mariscos,"Pescado y mariscos frescos. No: atún o caballa en lata (conservas), rebozados congelados (congelados)",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,embutidos frescos,"Chorizo, morcilla, longaniza, salchicha parrillera: para cocinar. No: salamín y fiambres (fiambres)",Alimentos y bebidas no alcohólicas,nuevo
+Carnes y pescados,otras carnes,"Cordero, cabrito, conejo, pavo y otras carnes que no son vacuna, cerdo ni pollo. Si dice congelado, va a carnes y pescados congelados",Alimentos y bebidas no alcohólicas,nuevo
+Panadería y rotisería,pan y panificados,"Pan fresco o envasado, pan lactal, pan de hamburguesa, prepizzas, pizzetas",Alimentos y bebidas no alcohólicas,renombrado (era panificados)
+Panadería y rotisería,facturas y tortas,"Facturas, tortas, bizcochuelos listos, budines, masas",Alimentos y bebidas no alcohólicas,nuevo
+Panadería y rotisería,comidas preparadas,"Rotisería que no viene congelada: empanadas, sándwiches, tartas, comidas listas. Congeladas van a congelados",Alimentos y bebidas no alcohólicas,nuevo
+Congelados,hamburguesas,Hamburguesas y medallones de carne o vegetales congelados. No: medallones de pescado (carnes y pescados congelados),Alimentos y bebidas no alcohólicas,existente
+Congelados,helados,"Helados en pote, palitos, bombones helados",Alimentos y bebidas no alcohólicas,existente
+Congelados,carnes y pescados congelados,"Carne, pollo y pescado congelados, medallones de pescado, rebozados (patitas, bastoncitos). Solo si la descripción o la marca dicen que es congelado",Alimentos y bebidas no alcohólicas,nuevo
+Congelados,vegetales congelados,"Verduras, papas y mixes congelados. Frescos van a frutas y verduras",Alimentos y bebidas no alcohólicas,nuevo
+Congelados,comidas congeladas,"Empanadas, pizzas, tartas y comidas listas congeladas. Sin congelar van a comidas preparadas",Alimentos y bebidas no alcohólicas,renombrado (era congelados)
+Bebidas sin alcohol,agua,"Agua mineral y de mesa, con o sin gas, saborizada",Alimentos y bebidas no alcohólicas,existente
+Bebidas sin alcohol,gaseosa,"Gaseosas, soda, agua tónica",Alimentos y bebidas no alcohólicas,existente
+Bebidas sin alcohol,jugos,"Jugos listos, concentrados y en polvo",Alimentos y bebidas no alcohólicas,existente
+Bebidas sin alcohol,isotónicas y energizantes,"Bebidas isotónicas, energizantes y de sales",Alimentos y bebidas no alcohólicas,existente
+Bebidas sin alcohol,amargos sin alcohol,Amargos y aperitivos sin alcohol (tipo Terma),Alimentos y bebidas no alcohólicas,existente
+Bebidas sin alcohol,bebidas vegetales,"Bebidas de almendra, soja, avena, coco",Alimentos y bebidas no alcohólicas,existente
+Bebidas con alcohol,cerveza,"Cerveza, también sin alcohol",Bebidas alcohólicas y tabaco,existente
+Bebidas con alcohol,vino y espumantes,"Vinos, espumantes, sidras",Bebidas alcohólicas y tabaco,existente
+Bebidas con alcohol,bebidas espirituosas,"Whisky, vodka, fernet, gin, licores, aperitivos con alcohol, bebidas listas con alcohol en lata",Bebidas alcohólicas y tabaco,existente
+Limpieza,limpieza hogar,"Lo que se gasta con el uso: lavandina, detergente, limpiadores, desinfectantes, alcohol etílico, insecticidas, esponjas, paños, bolsas de residuos, aromatizantes de ambiente, sahumerios y velas. No: utensilios que duran (bazar y hogar)",Equipamiento y mantenimiento del hogar,existente
+Limpieza,limpieza ropa,"Jabón para ropa en polvo o líquido, suavizantes, quitamanchas, apresto y productos para planchar",Equipamiento y mantenimiento del hogar,existente
+Limpieza,papeles,"Papel higiénico, rollos de cocina, servilletas, pañuelos descartables",Equipamiento y mantenimiento del hogar,existente
+Higiene personal,cuidado del cabello,"Shampoo, acondicionador, tinturas, fijadores. No: de línea bebé o infantil (pañales y cuidado del bebé)",Bienes y servicios varios,existente
+Higiene personal,higiene bucal,"Pasta dental, cepillos de dientes, enjuague bucal, hilo dental, adhesivos para prótesis",Bienes y servicios varios,existente
+Higiene personal,jabón de tocador,"Jabón en barra o líquido para manos y cuerpo, gel de ducha",Bienes y servicios varios,existente
+Higiene personal,desodorantes,"Desodorantes y antitranspirantes de uso general. No: íntimos (higiene femenina)",Bienes y servicios varios,existente
+Higiene personal,afeitado,"Máquinas y cartuchos de afeitar, espumas, depilación",Bienes y servicios varios,existente
+Higiene personal,higiene femenina,"Toallas femeninas, protectores diarios, tampones y productos de higiene íntima (desodorantes, jabones y toallitas íntimas). No: incontinencia",Bienes y servicios varios,existente
+Higiene personal,incontinencia,"Pañales y apósitos para adultos (Plenitud y similares)",Salud,nuevo
+Higiene personal,cuidado personal,"Cremas, protector solar, cuidado facial, algodón, hisopos, perfumes y colonias de adultos",Bienes y servicios varios,existente
+Bebés,pañales y cuidado del bebé,"Pañales de bebé, toallitas húmedas, óleo calcáreo, mamaderas, chupetes, y la higiene de línea bebé o infantil (baby, kids, niños): shampoo, jabón, colonia, talco, pasta dental",Bienes y servicios varios,renombrado (era bebés)
+Bebés,fórmulas infantiles,"Leches de fórmula infantiles (Nutrilon, Nan, Vital)",Alimentos y bebidas no alcohólicas,existente
+Mascotas,mascotas,"Alimento, piedras sanitarias, accesorios y ropa para perros y gatos",Recreación y cultura,existente
+No supermercado,librería,"Libros (en Carrefour y Changomas empiezan con ""LB""), álbumes de figuritas, cuadernos, útiles, mochilas y cartucheras",Recreación y cultura,nuevo
+No supermercado,electro y tecnología,"Celulares, televisores, heladeras, lavarropas, microondas, aires acondicionados, calefactores, ventiladores, lámparas, insumos de impresora (cartuchos, tóner), videojuegos y consolas",Equipamiento y mantenimiento del hogar,nuevo
+No supermercado,bazar y hogar,"Utensilios que duran: vasos, platos, herméticos, ollas, macetas, decoración, blanquería (sábanas, toallas), muebles, cotillón y decoración de fiesta (globos), individuales, tazas y mugs, pulverizadores vacíos, baldes, escobas, secadores, broches. No: aromatizantes ni sahumerios (limpieza hogar)",Equipamiento y mantenimiento del hogar,nuevo
+No supermercado,juguetes,"Juguetes y juegos de mesa",Recreación y cultura,nuevo
+No supermercado,ropa y calzado,"Ropa, medias, calzado, accesorios (riñoneras, cinturones)",Prendas de vestir y calzado,nuevo
+No supermercado,ferretería y jardín,"Herramientas, pilas, cables, pinturas, kits para inflar, plantas, semillas para huerta, tierra",Equipamiento y mantenimiento del hogar,nuevo
+No supermercado,aire libre y verano,"Piletas, salvavidas e inflables, reposeras, sillas plegables, sombrillas, conservadoras, bolsas de dormir y artículos de camping y playa",Recreación y cultura,nuevo
+No supermercado,tarjetas de regalo,"Tarjetas de regalo de cualquier comercio o servicio, y conceptos que no son mercadería (por ejemplo, una fila de reparación a $1). Nunca entran en una comparación de precios",,nuevo

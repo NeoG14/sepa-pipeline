@@ -1,0 +1,924 @@
+id_comercio,id_producto,producto,grupo,factor_kg
+10,2300377000008,Tomate redondo,Verduras,1.0
+10,2300393000006,Papa,Verduras,1.0
+10,2300397000002,Manzana roja,Frutas,1.0
+10,2301588000009,Morcilla,Cerdo,1.0
+10,2301591000003,Chorizo,Cerdo,1.0
+10,2301592000002,Chorizo,Cerdo,1.0
+10,2301593000001,Salchicha parrillera,Cerdo,1.0
+10,2301946000009,Manzana verde,Frutas,1.0
+10,2302037000007,Batata,Verduras,1.0
+10,2302280000007,Salame,Fiambres y quesos,1.0
+10,2302674000002,Salame,Fiambres y quesos,1.0
+10,2303252000001,Lechuga,Verduras,1.0
+10,2303253000000,Lechuga,Verduras,1.0
+10,2303620000008,Papa,Verduras,1.0
+10,2303849000001,Papa,Verduras,1.0
+10,2304643000006,Manzana roja,Frutas,1.0
+10,2304644000005,Limón,Frutas,1.0
+10,2304645000004,Papa,Verduras,1.0
+10,2304652000004,Naranja,Frutas,1.0
+10,2304748000000,Zanahoria,Verduras,1.0
+10,2305471000008,Morcilla,Cerdo,1.0
+10,2305515000001,Salame,Fiambres y quesos,1.0
+10,2305641000005,Chorizo,Cerdo,1.0
+10,2305775000001,Banana,Frutas,1.0
+10,2305844000000,Chorizo,Cerdo,1.0
+10,2305932000004,Salame,Fiambres y quesos,1.0
+10,2305940000003,Queso port salut,Fiambres y quesos,1.0
+10,2305960000007,Papa,Verduras,1.0
+10,2306740000002,Mandarina,Frutas,1.0
+10,2307312000000,Cebolla,Verduras,1.0
+10,2307327000002,Naranja,Frutas,1.0
+10,2308124000004,Papa,Verduras,1.0
+10,2320003000004,Limón,Frutas,1.0
+10,2320005000002,Naranja,Frutas,1.0
+10,2320016000008,Frutilla,Frutas,1.0
+10,2320034000004,Pera,Frutas,1.0
+10,2320035000003,Pera,Frutas,1.0
+10,2320036000002,Sandía,Frutas,1.0
+10,2320037000001,Sandía,Frutas,1.0
+10,2320042000003,Berenjena,Verduras,1.0
+10,2320043000002,Berenjena,Verduras,1.0
+10,2320045000000,Morrón rojo,Verduras,1.0
+10,2320047000008,Morrón verde,Verduras,1.0
+10,2320048000007,Tomate perita,Verduras,1.0
+10,2320051000001,Zapallito,Verduras,1.0
+10,2320052000000,Zapallito,Verduras,1.0
+10,2320056000006,Cebolla,Verduras,1.0
+10,2320061000008,Lechuga,Verduras,1.0
+10,2320062000007,Lechuga,Verduras,1.0
+10,2320066000003,Lechuga,Verduras,1.0
+10,2320067000002,Lechuga,Verduras,1.0
+10,2320068000001,Lechuga,Verduras,1.0
+10,2320073000003,Repollo blanco,Verduras,1.0
+10,2320076000000,Brócoli,Verduras,1.0
+10,2320078000008,Coliflor,Verduras,1.0
+10,2320085000008,Manzana verde,Frutas,1.0
+10,2320090000000,Pepino,Verduras,1.0
+10,2320097000003,Chaucha,Verduras,1.0
+10,2320098000002,Chaucha,Verduras,1.0
+10,2320103000003,Manzana roja,Frutas,1.0
+10,2372243000009,Cebolla,Verduras,1.0
+10,2504693000005,Asado,Carne vacuna,1.0
+10,2504695000003,Asado,Carne vacuna,1.0
+10,2504696000002,Vacío,Carne vacuna,1.0
+10,2504697000001,Vacío,Carne vacuna,1.0
+10,2504876000006,Salmón rosado,Pescado,1.0
+10,2505244000000,Jamón cocido,Fiambres y quesos,1.0
+10,2505247000007,Mortadela,Fiambres y quesos,1.0
+10,2505258000003,Queso sardo,Fiambres y quesos,1.0
+10,2505259000002,Queso cremoso,Fiambres y quesos,1.0
+10,2505261000007,Queso mozzarella,Fiambres y quesos,1.0
+10,2505262000006,Queso pategrás,Fiambres y quesos,1.0
+10,2505263000005,Queso port salut,Fiambres y quesos,1.0
+10,2505266000002,Queso cremoso,Fiambres y quesos,1.0
+10,2505270000005,Queso sardo,Fiambres y quesos,1.0
+10,2505297000002,Bife ancho,Carne vacuna,1.0
+10,2505310000002,Queso cremoso,Fiambres y quesos,1.0
+10,2505311000001,Queso cremoso,Fiambres y quesos,1.0
+10,2505439000006,Queso sardo,Fiambres y quesos,1.0
+10,2505498000009,Queso cremoso,Fiambres y quesos,1.0
+10,2505587000002,Queso cremoso,Fiambres y quesos,1.0
+10,2505638000005,Queso sardo,Fiambres y quesos,1.0
+10,2505639000004,Queso cremoso,Fiambres y quesos,1.0
+10,2505697000008,Cuadril,Carne vacuna,1.0
+10,2505700000001,Matambre,Carne vacuna,1.0
+10,2505705000006,Milanesa de nalga,Carne vacuna,1.0
+10,2505708000003,Paleta,Carne vacuna,1.0
+10,2505710000008,Roast beef,Carne vacuna,1.0
+10,2505713000005,Bife de chorizo,Carne vacuna,1.0
+10,2505716000002,Cuadril,Carne vacuna,1.0
+10,2505724000001,Milanesa de nalga,Carne vacuna,1.0
+10,2505726000009,Paleta,Carne vacuna,1.0
+10,2505727000008,Peceto,Carne vacuna,1.0
+10,2505728000007,Roast beef,Carne vacuna,1.0
+10,2505936000004,Queso mozzarella,Fiambres y quesos,1.0
+10,2506019000003,Carré de cerdo,Cerdo,1.0
+10,2506024000005,Falda,Carne vacuna,1.0
+10,2506040000003,Vacío,Carne vacuna,1.0
+10,2506041000002,Matambre,Carne vacuna,1.0
+10,2506044000009,Roast beef,Carne vacuna,1.0
+10,2506046000007,Asado,Carne vacuna,1.0
+10,2506072000002,Bife ancho,Carne vacuna,1.0
+10,2506079000005,Falda,Carne vacuna,1.0
+10,2506081000000,Osobuco,Carne vacuna,1.0
+10,2506097000001,Osobuco,Carne vacuna,1.0
+10,2506101000003,Bola de lomo,Carne vacuna,1.0
+10,2506103000001,Nalga,Carne vacuna,1.0
+10,2506116000005,Carne picada común,Carne vacuna,1.0
+10,2506117000004,Carne picada especial,Carne vacuna,1.0
+10,2506137000008,Milanesa de nalga,Carne vacuna,1.0
+10,2506138000007,Vacío,Carne vacuna,1.0
+10,2506157000002,Queso reggianito,Fiambres y quesos,1.0
+10,2506163000003,Paleta,Carne vacuna,1.0
+10,2506181000009,Queso pategrás,Fiambres y quesos,1.0
+10,2506190000007,Bife de chorizo,Carne vacuna,1.0
+10,2506205000008,Falda,Carne vacuna,1.0
+10,2506265000000,Roast beef,Carne vacuna,1.0
+10,2506270000002,Paleta,Carne vacuna,1.0
+10,2506280000009,Asado,Carne vacuna,1.0
+10,2506282000007,Vacío,Carne vacuna,1.0
+10,2506285000004,Cuadril,Carne vacuna,1.0
+10,2506286000003,Cuadril,Carne vacuna,1.0
+10,2506294000002,Milanesa de nalga,Carne vacuna,1.0
+10,2506296000000,Milanesa de nalga,Carne vacuna,1.0
+10,2506300000002,Osobuco,Carne vacuna,1.0
+10,2506303000009,Bife ancho,Carne vacuna,1.0
+10,2506314000005,Queso reggianito,Fiambres y quesos,1.0
+10,2506434000008,Queso reggianito,Fiambres y quesos,1.0
+10,2506435000007,Queso reggianito,Fiambres y quesos,1.0
+10,2506439000003,Queso cremoso,Fiambres y quesos,1.0
+10,2506441000008,Queso mozzarella,Fiambres y quesos,1.0
+10,2506444000005,Queso port salut,Fiambres y quesos,1.0
+10,2506448000001,Queso port salut,Fiambres y quesos,1.0
+10,2506458000008,Queso mozzarella,Fiambres y quesos,1.0
+10,2506459000007,Queso pategrás,Fiambres y quesos,1.0
+10,2506460000003,Queso sardo,Fiambres y quesos,1.0
+10,2506525000009,Filet de merluza,Pescado,1.0
+10,2506593000000,Carré de cerdo,Cerdo,1.0
+10,2506595000008,Bondiola de cerdo,Cerdo,1.0
+10,2506597000006,Matambrito de cerdo,Cerdo,1.0
+10,2506600000009,Chuleta de cerdo,Cerdo,1.0
+10,2506601000008,Chuleta de cerdo,Cerdo,1.0
+10,2506635000005,Queso mozzarella,Fiambres y quesos,1.0
+10,2506684000001,Jamón crudo,Fiambres y quesos,1.0
+10,2506685000000,Jamón crudo,Fiambres y quesos,1.0
+10,2506690000002,Queso pategrás,Fiambres y quesos,1.0
+10,2506693000009,Queso sardo,Fiambres y quesos,1.0
+10,2506694000008,Queso reggianito,Fiambres y quesos,1.0
+10,2506695000007,Queso port salut,Fiambres y quesos,1.0
+10,2506697000005,Salame,Fiambres y quesos,1.0
+10,2506700000008,Salame,Fiambres y quesos,1.0
+10,2506701000007,Salame,Fiambres y quesos,1.0
+10,2506783000001,Peceto,Carne vacuna,1.0
+10,2507154000002,Pata muslo y muslo,Pollo,1.0
+10,2507156000000,Pechuga de pollo,Pollo,1.0
+10,2507166000007,Pata muslo y muslo,Pollo,1.0
+10,2507171000009,Pata muslo y muslo,Pollo,1.0
+10,2507173000007,Pechuga de pollo,Pollo,1.0
+10,2507174000006,Pollo entero,Pollo,1.0
+10,2507175000005,Pollo entero,Pollo,1.0
+10,2507196000008,Pechuga de pollo,Pollo,1.0
+10,2507197000007,Pechuga de pollo,Pollo,1.0
+10,2507198000006,Pata muslo y muslo,Pollo,1.0
+10,2507199000005,Pollo entero,Pollo,1.0
+10,2507200000000,Pollo entero,Pollo,1.0
+10,2507201000009,Pata muslo y muslo,Pollo,1.0
+10,2507279000000,Roast beef,Carne vacuna,1.0
+10,2507280000006,Paleta,Carne vacuna,1.0
+10,2507281000005,Bife de chorizo,Carne vacuna,1.0
+10,2507283000003,Peceto,Carne vacuna,1.0
+10,2507284000002,Queso port salut,Fiambres y quesos,1.0
+10,2507364000007,Queso reggianito,Fiambres y quesos,1.0
+10,2507365000006,Queso cremoso,Fiambres y quesos,1.0
+10,2507371000007,Queso port salut,Fiambres y quesos,1.0
+10,2507376000002,Queso cremoso,Fiambres y quesos,1.0
+10,2507483000001,Pollo entero,Pollo,1.0
+10,2507513000001,Queso pategrás,Fiambres y quesos,1.0
+10,2507514000000,Queso sardo,Fiambres y quesos,1.0
+10,2507518000006,Queso reggianito,Fiambres y quesos,1.0
+10,2507519000005,Queso sardo,Fiambres y quesos,1.0
+10,2507523000008,Jamón cocido,Fiambres y quesos,1.0
+10,2507538000000,Jamón crudo,Fiambres y quesos,1.0
+10,2507583000000,Pata muslo y muslo,Pollo,1.0
+10,2507596000004,Pechuga de pollo,Pollo,1.0
+10,2508119000006,Salame,Fiambres y quesos,1.0
+10,2508171000006,Peceto,Carne vacuna,1.0
+10,2508174000003,Matambre,Carne vacuna,1.0
+10,2508229000002,Chorizo,Cerdo,1.0
+10,2508308000008,Jamón cocido,Fiambres y quesos,1.0
+10,2508612000008,Salame,Fiambres y quesos,1.0
+10,2508613000007,Salame,Fiambres y quesos,1.0
+10,2508626000001,Queso sardo,Fiambres y quesos,1.0
+10,2508638000006,Chorizo,Cerdo,1.0
+10,2508639000005,Chorizo,Cerdo,1.0
+10,2508642000009,Chorizo,Cerdo,1.0
+10,2508643000008,Chorizo,Cerdo,1.0
+10,2508644000007,Morcilla,Cerdo,1.0
+10,2508645000006,Morcilla,Cerdo,1.0
+10,2508652000006,Queso sardo,Fiambres y quesos,1.0
+10,2508653000005,Queso reggianito,Fiambres y quesos,1.0
+10,2508656000002,Queso pategrás,Fiambres y quesos,1.0
+10,2508695000001,Queso cremoso,Fiambres y quesos,1.0
+10,2508700000002,Morcilla,Cerdo,1.0
+10,2508701000001,Chorizo,Cerdo,1.0
+10,2508725000001,Batata,Verduras,1.0
+10,2508730000003,Cebolla,Verduras,1.0
+10,2508731000002,Berenjena,Verduras,1.0
+10,2508733000000,Berenjena,Verduras,1.0
+10,2508753000004,Zapallo anco,Verduras,1.0
+10,2508815000003,Tomate redondo,Verduras,1.0
+10,2508816000002,Tomate redondo,Verduras,1.0
+10,2508820000005,Zapallito,Verduras,1.0
+10,2508825000000,Lechuga,Verduras,1.0
+10,2508827000008,Lechuga,Verduras,1.0
+10,2508844000005,Banana,Frutas,1.0
+10,2508946000002,Sandía,Frutas,1.0
+10,2508964000008,Queso cremoso,Fiambres y quesos,1.0
+10,2508966000006,Queso cremoso,Fiambres y quesos,1.0
+10,2508967000005,Queso port salut,Fiambres y quesos,1.0
+10,2508987000009,Queso pategrás,Fiambres y quesos,1.0
+10,2508989000007,Queso cremoso,Fiambres y quesos,1.0
+10,2508990000003,Queso port salut,Fiambres y quesos,1.0
+10,2509002000004,Jamón cocido,Fiambres y quesos,1.0
+10,2509003000003,Queso reggianito,Fiambres y quesos,1.0
+10,2509004000002,Mortadela,Fiambres y quesos,1.0
+10,2509005000001,Queso cremoso,Fiambres y quesos,1.0
+10,2509035000002,Salame,Fiambres y quesos,1.0
+10,2509044000000,Roast beef,Carne vacuna,1.0
+10,2509045000009,Cuadril,Carne vacuna,1.0
+10,2509051000000,Milanesa de nalga,Carne vacuna,1.0
+10,2509053000008,Bife de chorizo,Carne vacuna,1.0
+10,2509067000001,Queso cremoso,Fiambres y quesos,1.0
+10,2509076000009,Queso cremoso,Fiambres y quesos,1.0
+10,2509085000007,Queso port salut,Fiambres y quesos,1.0
+10,2509088000004,Queso sardo,Fiambres y quesos,1.0
+10,2509095000004,Chorizo,Cerdo,1.0
+10,2509096000003,Morcilla,Cerdo,1.0
+10,2509202000002,Paleta,Carne vacuna,1.0
+10,2509218000003,Queso mozzarella,Fiambres y quesos,1.0
+10,2509219000002,Queso port salut,Fiambres y quesos,1.0
+10,2509220000008,Queso cremoso,Fiambres y quesos,1.0
+10,2509221000007,Queso cremoso,Fiambres y quesos,1.0
+10,2509260000006,Jamón crudo,Fiambres y quesos,1.0
+10,2509268000008,Queso cremoso,Fiambres y quesos,1.0
+10,2509346000005,Acelga,Verduras,1.0
+10,2509360000005,Banana,Frutas,1.0
+10,2509361000004,Batata,Verduras,1.0
+10,2509362000003,Batata,Verduras,1.0
+10,2509363000002,Berenjena,Verduras,1.0
+10,2509364000001,Berenjena,Verduras,1.0
+10,2509365000000,Berenjena,Verduras,1.0
+10,2509367000008,Brócoli,Verduras,1.0
+10,2509371000001,Cebolla,Verduras,1.0
+10,2509372000000,Cebolla,Verduras,1.0
+10,2509376000006,Chaucha,Verduras,1.0
+10,2509377000005,Chaucha,Verduras,1.0
+10,2509383000006,Coliflor,Verduras,1.0
+10,2509392000004,Frutilla,Frutas,1.0
+10,2509398000008,Lechuga,Verduras,1.0
+10,2509399000007,Lechuga,Verduras,1.0
+10,2509400000002,Lechuga,Verduras,1.0
+10,2509401000001,Lechuga,Verduras,1.0
+10,2509402000000,Lechuga,Verduras,1.0
+10,2509403000009,Lechuga,Verduras,1.0
+10,2509404000008,Lechuga,Verduras,1.0
+10,2509407000005,Limón,Frutas,1.0
+10,2509408000004,Mandarina,Frutas,1.0
+10,2509409000003,Mandarina,Frutas,1.0
+10,2509412000007,Manzana verde,Frutas,1.0
+10,2509414000005,Manzana roja,Frutas,1.0
+10,2509415000004,Manzana roja,Frutas,1.0
+10,2509416000003,Manzana roja,Frutas,1.0
+10,2509422000004,Naranja,Frutas,1.0
+10,2509424000002,Naranja,Frutas,1.0
+10,2509426000000,Papa,Verduras,1.0
+10,2509427000009,Papa,Verduras,1.0
+10,2509428000008,Papa,Verduras,1.0
+10,2509430000003,Papa,Verduras,1.0
+10,2509435000008,Pepino,Verduras,1.0
+10,2509436000007,Pera,Frutas,1.0
+10,2509437000006,Pera,Frutas,1.0
+10,2509441000009,Morrón rojo,Verduras,1.0
+10,2509442000008,Morrón verde,Verduras,1.0
+10,2509453000004,Repollo blanco,Verduras,1.0
+10,2509456000001,Sandía,Frutas,1.0
+10,2509459000008,Tomate redondo,Verduras,1.0
+10,2509460000004,Tomate perita,Verduras,1.0
+10,2509467000007,Zanahoria,Verduras,1.0
+10,2509468000006,Zapallito,Verduras,1.0
+10,2509470000001,Zapallito,Verduras,1.0
+10,2509472000009,Zapallo anco,Verduras,1.0
+10,2509473000008,Zapallo anco,Verduras,1.0
+10,2509537000005,Naranja,Frutas,1.0
+10,2509541000008,Mandarina,Frutas,1.0
+10,2509543000006,Limón,Frutas,1.0
+10,2509546000003,Bondiola de cerdo,Cerdo,1.0
+10,2509549000000,Matambrito de cerdo,Cerdo,1.0
+10,2509556000000,Pata muslo y muslo,Pollo,1.0
+10,2509560000003,Salmón rosado,Pescado,1.0
+10,2509561000002,Salmón rosado,Pescado,1.0
+10,2509581000006,Filet de merluza,Pescado,1.0
+10,2509637000004,Carne picada especial,Carne vacuna,1.0
+10,2509644000004,Queso cremoso,Fiambres y quesos,1.0
+10,2509683000003,Cuadril,Carne vacuna,1.0
+10,2509687000009,Milanesa de nalga,Carne vacuna,1.0
+10,2509688000008,Osobuco,Carne vacuna,1.0
+10,2509689000007,Paleta,Carne vacuna,1.0
+10,2509690000003,Roast beef,Carne vacuna,1.0
+10,2509693000000,Vacío,Carne vacuna,1.0
+10,2509694000009,Falda,Carne vacuna,1.0
+10,2509703000006,Jamón cocido,Fiambres y quesos,1.0
+10,2509705000004,Jamón cocido,Fiambres y quesos,1.0
+10,2509706000003,Jamón cocido,Fiambres y quesos,1.0
+10,2509707000002,Jamón cocido,Fiambres y quesos,1.0
+10,2509709000000,Salame,Fiambres y quesos,1.0
+10,2509710000006,Mortadela,Fiambres y quesos,1.0
+10,2509711000005,Mortadela,Fiambres y quesos,1.0
+10,2509719000007,Queso sardo,Fiambres y quesos,1.0
+10,2509737000003,Salame,Fiambres y quesos,1.0
+10,2509738000002,Salame,Fiambres y quesos,1.0
+10,2509746000001,Jamón crudo,Fiambres y quesos,1.0
+10,2509754000000,Paleta,Carne vacuna,1.0
+10,2509755000009,Peceto,Carne vacuna,1.0
+10,2509757000007,Vacío,Carne vacuna,1.0
+10,2509781000004,Bife de chorizo,Carne vacuna,1.0
+10,2509786000009,Peceto,Carne vacuna,1.0
+10,2509788000007,Nalga,Carne vacuna,1.0
+10,2509789000006,Bola de lomo,Carne vacuna,1.0
+10,2509823000009,Chorizo,Cerdo,1.0
+10,2509827000005,Salame,Fiambres y quesos,1.0
+10,2509828000004,Bondiola de cerdo,Cerdo,1.0
+10,2509829000003,Salame,Fiambres y quesos,1.0
+10,2509830000009,Salame,Fiambres y quesos,1.0
+10,2509836000003,Banana,Frutas,1.0
+10,2509837000002,Manzana roja,Frutas,1.0
+10,2509864000006,Salame,Fiambres y quesos,1.0
+10,2509890000001,Tomate redondo,Verduras,1.0
+10,2509903000004,Palta,Frutas,1.0
+10,2509909000008,Queso reggianito,Fiambres y quesos,1.0
+10,2509910000004,Queso sardo,Fiambres y quesos,1.0
+10,2509953000009,Jamón crudo,Fiambres y quesos,1.0
+10,2509963000006,Queso sardo,Fiambres y quesos,1.0
+10,2509965000004,Chuleta de cerdo,Cerdo,1.0
+10,2509966000003,Chuleta de cerdo,Cerdo,1.0
+10,2509967000002,Bondiola de cerdo,Cerdo,1.0
+10,2509969000000,Matambrito de cerdo,Cerdo,1.0
+10,2509972000004,Carré de cerdo,Cerdo,1.0
+10,2510064000000,Jamón crudo,Fiambres y quesos,1.0
+10,2510129000006,Queso pategrás,Fiambres y quesos,1.0
+10,2510130000002,Queso cremoso,Fiambres y quesos,1.0
+10,2510223000001,Queso port salut,Fiambres y quesos,1.0
+10,2510242000006,Jamón crudo,Fiambres y quesos,1.0
+10,2510257000008,Queso cremoso,Fiambres y quesos,1.0
+10,2510260000002,Chorizo,Cerdo,1.0
+10,2510261000001,Chorizo,Cerdo,1.0
+10,2510262000000,Morcilla,Cerdo,1.0
+10,2510264000008,Salchicha parrillera,Cerdo,1.0
+10,2510277000002,Jamón cocido,Fiambres y quesos,1.0
+10,2510307000002,Chorizo,Cerdo,1.0
+10,2510308000001,Chorizo,Cerdo,1.0
+10,2510309000000,Morcilla,Cerdo,1.0
+10,2510310000006,Morcilla,Cerdo,1.0
+10,2510333000007,Matambrito de cerdo,Cerdo,1.0
+10,2510376000002,Chorizo,Cerdo,1.0
+10,2510379000009,Morcilla,Cerdo,1.0
+10,2510411000004,Salame,Fiambres y quesos,1.0
+10,2510421000001,Jamón crudo,Fiambres y quesos,1.0
+10,2510474000003,Queso cremoso,Fiambres y quesos,1.0
+10,2510476000001,Jamón crudo,Fiambres y quesos,1.0
+10,2510518000006,Salame,Fiambres y quesos,1.0
+10,2510521000000,Jamón crudo,Fiambres y quesos,1.0
+10,2510523000008,Jamón cocido,Fiambres y quesos,1.0
+10,2510695000004,Queso reggianito,Fiambres y quesos,1.0
+10,2510696000003,Queso pategrás,Fiambres y quesos,1.0
+10,2510716000006,Banana,Frutas,1.0
+10,2510717000005,Manzana roja,Frutas,1.0
+10,2510718000004,Manzana verde,Frutas,1.0
+10,2510720000009,Naranja,Frutas,1.0
+10,2510721000008,Zanahoria,Verduras,1.0
+10,2510746000007,Queso reggianito,Fiambres y quesos,1.0
+10,2510747000006,Queso sardo,Fiambres y quesos,1.0
+10,2510765000002,Banana,Frutas,1.0
+10,2510766000001,Manzana roja,Frutas,1.0
+10,2510768000009,Naranja,Frutas,1.0
+10,2510769000008,Zanahoria,Verduras,1.0
+10,2510846000006,Jamón cocido,Fiambres y quesos,1.0
+10,2510853000006,Salame,Fiambres y quesos,1.0
+10,2510865000001,Queso cremoso,Fiambres y quesos,1.0
+10,2510866000000,Queso cremoso,Fiambres y quesos,1.0
+10,2510952000006,Pechuga de pollo,Pollo,1.0
+10,2510958000000,Pollo entero,Pollo,1.0
+10,2510959000009,Jamón cocido,Fiambres y quesos,1.0
+10,2510996000000,Bife de chorizo,Carne vacuna,1.0
+10,2510997000009,Bola de lomo,Carne vacuna,1.0
+10,2511001000008,Cuadril,Carne vacuna,1.0
+10,2511005000004,Nalga,Carne vacuna,1.0
+10,2511007000002,Paleta,Carne vacuna,1.0
+10,2511009000000,Peceto,Carne vacuna,1.0
+10,2511010000006,Roast beef,Carne vacuna,1.0
+10,2511017000009,Queso pategrás,Fiambres y quesos,1.0
+10,2511021000002,Queso mozzarella,Fiambres y quesos,1.0
+10,2511023000000,Queso reggianito,Fiambres y quesos,1.0
+10,2511033000007,Queso cremoso,Fiambres y quesos,1.0
+10,2511034000006,Queso mozzarella,Fiambres y quesos,1.0
+10,2511037000003,Queso pategrás,Fiambres y quesos,1.0
+10,2511095000007,Salame,Fiambres y quesos,1.0
+10,2511096000006,Salame,Fiambres y quesos,1.0
+10,2511097000005,Salame,Fiambres y quesos,1.0
+10,2511098000004,Chorizo,Cerdo,1.0
+10,2511158000005,Jamón cocido,Fiambres y quesos,1.0
+10,2511159000004,Mortadela,Fiambres y quesos,1.0
+10,2511161000009,Salame,Fiambres y quesos,1.0
+10,2511162000008,Salame,Fiambres y quesos,1.0
+10,2511167000003,Jamón crudo,Fiambres y quesos,1.0
+10,2511169000001,Mortadela,Fiambres y quesos,1.0
+10,2511176000001,Queso cremoso,Fiambres y quesos,1.0
+10,2511177000000,Queso cremoso,Fiambres y quesos,1.0
+10,2511178000009,Queso port salut,Fiambres y quesos,1.0
+10,2511181000003,Queso pategrás,Fiambres y quesos,1.0
+10,2511184000000,Queso sardo,Fiambres y quesos,1.0
+10,2511185000009,Queso sardo,Fiambres y quesos,1.0
+10,2511186000008,Queso reggianito,Fiambres y quesos,1.0
+10,2511187000007,Pollo entero,Pollo,1.0
+10,2511218000006,Queso mozzarella,Fiambres y quesos,1.0
+10,2511219000005,Queso cremoso,Fiambres y quesos,1.0
+10,2511231000007,Jamón cocido,Fiambres y quesos,1.0
+10,2511234000004,Mortadela,Fiambres y quesos,1.0
+10,2511276000000,Queso cremoso,Fiambres y quesos,1.0
+10,2511277000009,Queso cremoso,Fiambres y quesos,1.0
+11,2000240000004,Queso reggianito,Fiambres y quesos,1.0
+11,2000700000001,Asado,Carne vacuna,1.0
+11,2000770000000,Queso reggianito,Fiambres y quesos,1.0
+11,2001140000002,Asado,Carne vacuna,1.0
+11,2002240000008,Peceto,Carne vacuna,1.0
+11,2003000000009,Osobuco,Carne vacuna,1.0
+11,2003640000001,Queso port salut,Fiambres y quesos,1.0
+11,2003750000007,Queso port salut,Fiambres y quesos,1.0
+11,2005880000001,Queso sardo,Fiambres y quesos,1.0
+11,2007500000002,Chorizo,Cerdo,1.0
+11,2007520000006,Morcilla,Cerdo,1.0
+11,2009390000001,Chorizo,Cerdo,1.0
+11,2009900000002,Queso port salut,Fiambres y quesos,1.0
+11,2010290000008,Carne picada especial,Carne vacuna,1.0
+11,2010360000006,Paleta,Carne vacuna,1.0
+11,2010390000007,Vacío,Carne vacuna,1.0
+11,2010400000003,Matambre,Carne vacuna,1.0
+11,2010430000004,Peceto,Carne vacuna,1.0
+11,2010500000002,Cuadril,Carne vacuna,1.0
+11,2010510000009,Bife de chorizo,Carne vacuna,1.0
+11,2011300000001,Peceto,Carne vacuna,1.0
+11,2022300000007,Queso cremoso,Fiambres y quesos,1.0
+11,2022310000004,Queso cremoso,Fiambres y quesos,1.0
+11,2023700000000,Peceto,Carne vacuna,1.0
+11,2032550000009,Queso cremoso,Fiambres y quesos,1.0
+11,2032620000007,Queso sardo,Fiambres y quesos,1.0
+11,2032790000005,Chorizo,Cerdo,1.0
+11,2032820000005,Morcilla,Cerdo,1.0
+11,2032950000005,Morcilla,Cerdo,1.0
+11,2032970000009,Salchicha parrillera,Cerdo,1.0
+11,2033460000004,Queso cremoso,Fiambres y quesos,1.0
+11,2034330000001,Milanesa de nalga,Carne vacuna,1.0
+11,2044850000009,Matambrito de cerdo,Cerdo,1.0
+11,2045160000000,Bondiola de cerdo,Cerdo,1.0
+11,2050640000005,Chorizo,Cerdo,1.0
+11,2051160000001,Bondiola de cerdo,Cerdo,1.0
+11,2051190000002,Matambrito de cerdo,Cerdo,1.0
+11,2051200000008,Carré de cerdo,Cerdo,1.0
+11,2060840000002,Carne picada común,Carne vacuna,1.0
+11,2060870000003,Queso cremoso,Fiambres y quesos,1.0
+11,2061150000003,Berenjena,Verduras,1.0
+11,2061840000009,Queso sardo,Fiambres y quesos,1.0
+11,2063930000005,Queso port salut,Fiambres y quesos,1.0
+11,2063950000009,Queso pategrás,Fiambres y quesos,1.0
+11,2063960000006,Queso reggianito,Fiambres y quesos,1.0
+11,2064390000000,Queso cremoso,Fiambres y quesos,1.0
+11,2065570000001,Salame,Fiambres y quesos,1.0
+11,2065580000008,Salame,Fiambres y quesos,1.0
+11,2065640000009,Salame,Fiambres y quesos,1.0
+11,2065650000006,Salame,Fiambres y quesos,1.0
+11,2065680000007,Queso reggianito,Fiambres y quesos,1.0
+11,2068730000002,Queso reggianito,Fiambres y quesos,1.0
+11,2073440000006,Bondiola de cerdo,Cerdo,1.0
+11,2075950000002,Bondiola de cerdo,Cerdo,1.0
+11,2078270000004,Matambre,Carne vacuna,1.0
+11,2078280000001,Bondiola de cerdo,Cerdo,1.0
+11,2078300000004,Carré de cerdo,Cerdo,1.0
+11,2080080000006,Osobuco,Carne vacuna,1.0
+11,2080100000009,Asado,Carne vacuna,1.0
+11,2080150000004,Asado,Carne vacuna,1.0
+11,2080590000008,Asado,Carne vacuna,1.0
+11,2080870000001,Roast beef,Carne vacuna,1.0
+11,2081560000004,Bife ancho,Carne vacuna,1.0
+11,2081700000000,Asado,Carne vacuna,1.0
+11,2082020000008,Osobuco,Carne vacuna,1.0
+11,2082040000002,Asado,Carne vacuna,1.0
+11,2082050000009,Asado,Carne vacuna,1.0
+11,2082100000003,Falda,Carne vacuna,1.0
+11,2085520000004,Falda,Carne vacuna,1.0
+11,2085630000000,Bife ancho,Carne vacuna,1.0
+11,2087170000007,Paleta,Carne vacuna,1.0
+11,2087260000009,Roast beef,Carne vacuna,1.0
+11,2087750000007,Vacío,Carne vacuna,1.0
+11,2087760000004,Matambre,Carne vacuna,1.0
+11,2087980000006,Cuadril,Carne vacuna,1.0
+11,2088980000003,Vacío,Carne vacuna,1.0
+11,2096750000009,Osobuco,Carne vacuna,1.0
+11,2096800000003,Asado,Carne vacuna,1.0
+11,2098480000007,Chuleta de cerdo,Cerdo,1.0
+11,2099280000006,Bondiola de cerdo,Cerdo,1.0
+11,2703030000009,Asado,Carne vacuna,1.0
+11,2736290000007,Manzana roja,Frutas,1.0
+11,2739790000003,Papa,Verduras,1.0
+11,2739990000001,Papa,Verduras,1.0
+11,2740110000009,Banana,Frutas,1.0
+11,2740120000006,Naranja,Frutas,1.0
+11,2740150000007,Manzana roja,Frutas,1.0
+11,2740160000004,Manzana roja,Frutas,1.0
+11,2740170000001,Manzana verde,Frutas,1.0
+11,2740310000007,Sandía,Frutas,1.0
+11,2740600000007,Brócoli,Verduras,1.0
+11,2740620000001,Pepino,Verduras,1.0
+11,2740640000005,Tomate redondo,Verduras,1.0
+11,2740650000002,Morrón verde,Verduras,1.0
+11,2740670000006,Zapallito,Verduras,1.0
+11,2740690000000,Repollo blanco,Verduras,1.0
+11,2740760000008,Lechuga,Verduras,1.0
+11,2740810000002,Berenjena,Verduras,1.0
+11,2740870000004,Tomate perita,Verduras,1.0
+11,2740880000001,Morrón rojo,Verduras,1.0
+11,2740910000001,Batata,Verduras,1.0
+11,2740930000005,Cebolla,Verduras,1.0
+11,2742250000000,Palta,Frutas,1.0
+11,2743230000003,Frutilla,Frutas,1.0
+11,2743880000002,Naranja,Frutas,1.0
+11,2744090000004,Pera,Frutas,1.0
+11,2744330000009,Limón,Frutas,1.0
+11,2744340000006,Mandarina,Frutas,1.0
+11,2745280000002,Chaucha,Verduras,1.0
+11,2745620000006,Zanahoria,Verduras,1.0
+11,2745670000001,Coliflor,Verduras,1.0
+11,2746010000002,Berenjena,Verduras,1.0
+11,2746320000006,Lechuga,Verduras,1.0
+11,2746340000000,Lechuga,Verduras,1.0
+11,2746400000001,Lechuga,Verduras,1.0
+11,2746630000000,Cebolla,Verduras,1.0
+11,2747550000002,Zapallito,Verduras,1.0
+11,2747590000000,Zapallo anco,Verduras,1.0
+11,2750250000005,Manzana roja,Frutas,1.0
+11,2765960000009,Manzana roja,Frutas,1.0
+11,2770160000001,Batata,Verduras,1.0
+11,2861770000007,Pollo entero,Pollo,0.370411
+12,2000000002033,Mandarina,Frutas,1.0
+12,2000000100876,Chorizo,Cerdo,1.0
+12,2000000103877,Jamón cocido,Fiambres y quesos,1.0
+12,2000000104270,Jamón cocido,Fiambres y quesos,1.0
+12,2000000110509,Queso mozzarella,Fiambres y quesos,1.0
+12,2000000110974,Jamón crudo,Fiambres y quesos,1.0
+12,2000000111025,Queso cremoso,Fiambres y quesos,1.0
+12,2000000116013,Filet de merluza,Pescado,1.0
+12,2000000118383,Jamón cocido,Fiambres y quesos,1.0
+12,2000000118642,Jamón cocido,Fiambres y quesos,1.0
+12,2000000118680,Jamón crudo,Fiambres y quesos,1.0
+12,2000000120317,Jamón crudo,Fiambres y quesos,1.0
+12,2000000120324,Jamón crudo,Fiambres y quesos,1.0
+12,2000000129150,Queso port salut,Fiambres y quesos,1.0
+12,2000000131207,Salmón rosado,Pescado,1.0
+12,2000000131740,Queso sardo,Fiambres y quesos,1.0
+12,2000000131788,Queso mozzarella,Fiambres y quesos,1.0
+12,2000000133096,Queso port salut,Fiambres y quesos,1.0
+12,2000000133799,Jamón cocido,Fiambres y quesos,1.0
+12,2000000133805,Jamón cocido,Fiambres y quesos,1.0
+12,2000000134635,Jamón cocido,Fiambres y quesos,1.0
+12,2000000139319,Queso pategrás,Fiambres y quesos,1.0
+12,2000000139678,Palta,Frutas,1.0
+12,2000000139708,Bondiola de cerdo,Cerdo,1.0
+12,2000000141756,Queso pategrás,Fiambres y quesos,1.0
+12,2000000144146,Jamón cocido,Fiambres y quesos,1.0
+12,2000000144894,Queso port salut,Fiambres y quesos,1.0
+12,2000000148144,Salame,Fiambres y quesos,1.0
+12,2000000148151,Salame,Fiambres y quesos,1.0
+12,2000000148540,Queso sardo,Fiambres y quesos,1.0
+12,2000000148557,Queso reggianito,Fiambres y quesos,1.0
+12,2000000152400,Jamón cocido,Fiambres y quesos,1.0
+12,2000000152417,Jamón cocido,Fiambres y quesos,1.0
+12,2000000153186,Salame,Fiambres y quesos,1.0
+12,2000000153193,Salame,Fiambres y quesos,1.0
+12,2000000153520,Chorizo,Cerdo,1.0
+12,2000000156484,Queso reggianito,Fiambres y quesos,1.0
+12,2000000156491,Queso sardo,Fiambres y quesos,1.0
+12,2000000158600,Queso pategrás,Fiambres y quesos,1.0
+12,2000000158617,Queso reggianito,Fiambres y quesos,1.0
+12,2000000158624,Queso port salut,Fiambres y quesos,1.0
+12,2000000160283,Queso sardo,Fiambres y quesos,1.0
+12,2000000160641,Mortadela,Fiambres y quesos,1.0
+12,2000000160740,Salame,Fiambres y quesos,1.0
+12,2000000160924,Jamón cocido,Fiambres y quesos,1.0
+12,2000000161884,Jamón crudo,Fiambres y quesos,1.0
+12,2000000166902,Asado,Carne vacuna,1.0
+12,2000000168487,Jamón cocido,Fiambres y quesos,1.0
+12,2000000170480,Salame,Fiambres y quesos,1.0
+12,2000000182650,Jamón crudo,Fiambres y quesos,1.0
+12,2000000183800,Salame,Fiambres y quesos,1.0
+12,2000000183817,Salame,Fiambres y quesos,1.0
+12,2000000183824,Jamón cocido,Fiambres y quesos,1.0
+12,2000000184647,Bondiola de cerdo,Cerdo,1.0
+12,2000000184678,Mortadela,Fiambres y quesos,1.0
+12,2000000184692,Jamón cocido,Fiambres y quesos,1.0
+12,2000000188041,Queso cremoso,Fiambres y quesos,1.0
+12,2000000188546,Queso mozzarella,Fiambres y quesos,1.0
+12,2000000193885,Jamón cocido,Fiambres y quesos,1.0
+12,2000000193915,Salame,Fiambres y quesos,1.0
+12,2000000200385,Jamón crudo,Fiambres y quesos,1.0
+12,2000000200392,Jamón crudo,Fiambres y quesos,1.0
+12,2000000200453,Jamón crudo,Fiambres y quesos,1.0
+12,2000000202815,Salame,Fiambres y quesos,1.0
+12,2000000203003,Jamón crudo,Fiambres y quesos,1.0
+12,2000000203010,Jamón crudo,Fiambres y quesos,1.0
+12,2000000211213,Queso port salut,Fiambres y quesos,1.0
+12,2000000228259,Salame,Fiambres y quesos,1.0
+12,2000000228280,Jamón cocido,Fiambres y quesos,1.0
+12,2000000260587,Jamón cocido,Fiambres y quesos,1.0
+12,2000000355962,Salchicha parrillera,Cerdo,1.0
+12,2000000406107,Queso reggianito,Fiambres y quesos,1.0
+12,2000000407630,Chorizo,Cerdo,1.0
+12,2000000407647,Chorizo,Cerdo,1.0
+12,2000000412894,Roast beef,Carne vacuna,1.0
+12,2000000412900,Paleta,Carne vacuna,1.0
+12,2000000413129,Morcilla,Cerdo,1.0
+12,2000000422206,Queso cremoso,Fiambres y quesos,1.0
+12,2000000422213,Queso port salut,Fiambres y quesos,1.0
+12,2000000437408,Queso cremoso,Fiambres y quesos,1.0
+12,2000000438214,Queso mozzarella,Fiambres y quesos,1.0
+12,2000000451824,Salame,Fiambres y quesos,1.0
+12,2000000461205,Queso port salut,Fiambres y quesos,1.0
+12,2000000465500,Queso cremoso,Fiambres y quesos,1.0
+12,2000000466460,Filet de merluza,Pescado,1.0
+12,2000000475967,Chorizo,Cerdo,1.0
+12,2000000478609,Chorizo,Cerdo,1.0
+12,2000000479798,Asado,Carne vacuna,1.0
+12,2000000479804,Vacío,Carne vacuna,1.0
+12,2000000479842,Paleta,Carne vacuna,1.0
+12,2000000479859,Roast beef,Carne vacuna,1.0
+12,2000000479910,Nalga,Carne vacuna,1.0
+12,2000000479934,Bola de lomo,Carne vacuna,1.0
+12,2000000479941,Peceto,Carne vacuna,1.0
+12,2000000479965,Matambre,Carne vacuna,1.0
+12,2000000481241,Carne picada especial,Carne vacuna,1.0
+12,2000000482972,Chorizo,Cerdo,1.0
+12,2000000482996,Morcilla,Cerdo,1.0
+12,2000000610092,Limón,Frutas,1.0
+12,2000000720449,Batata,Verduras,1.0
+12,2000149000006,Queso sardo,Fiambres y quesos,1.0
+12,2000153000009,Queso pategrás,Fiambres y quesos,1.0
+12,2000161000008,Queso cremoso,Fiambres y quesos,1.0
+12,2000163000006,Queso port salut,Fiambres y quesos,1.0
+12,2000165000004,Queso reggianito,Fiambres y quesos,1.0
+12,2000199000001,Queso cremoso,Fiambres y quesos,1.0
+12,2000225000005,Queso sardo,Fiambres y quesos,1.0
+12,2000335000001,Matambrito de cerdo,Cerdo,1.0
+12,2000349000004,Manzana roja,Frutas,1.0
+12,2000420000008,Naranja,Frutas,1.0
+12,2000424000004,Lechuga,Verduras,1.0
+12,2000446000006,Banana,Frutas,1.0
+12,2000459000000,Queso reggianito,Fiambres y quesos,1.0
+12,2000497000000,Frutilla,Frutas,1.0
+12,2000516000004,Mandarina,Frutas,1.0
+12,2000527000000,Manzana verde,Frutas,1.0
+12,2000528000009,Manzana roja,Frutas,1.0
+12,2000529000008,Manzana roja,Frutas,1.0
+12,2000535000009,Manzana roja,Frutas,1.0
+12,2000541000000,Palta,Frutas,1.0
+12,2000544000007,Pera,Frutas,1.0
+12,2000587000002,Queso reggianito,Fiambres y quesos,1.0
+12,2000593000003,Berenjena,Verduras,1.0
+12,2000598000008,Brócoli,Verduras,1.0
+12,2000602000000,Cebolla,Verduras,1.0
+12,2000606000006,Manzana roja,Frutas,1.0
+12,2000613000006,Chaucha,Verduras,1.0
+12,2000615000004,Cebolla,Verduras,1.0
+12,2000619000000,Coliflor,Verduras,1.0
+12,2000648000002,Lechuga,Verduras,1.0
+12,2000649000001,Lechuga,Verduras,1.0
+12,2000650000007,Lechuga,Verduras,1.0
+12,2000651000006,Lechuga,Verduras,1.0
+12,2000665000009,Pepino,Verduras,1.0
+12,2000671000000,Morrón rojo,Verduras,1.0
+12,2000672000009,Morrón verde,Verduras,1.0
+12,2000678000003,Repollo blanco,Verduras,1.0
+12,2000683000005,Tomate perita,Verduras,1.0
+12,2000684000004,Tomate redondo,Verduras,1.0
+12,2000686000002,Zanahoria,Verduras,1.0
+12,2000688000000,Zapallo anco,Verduras,1.0
+12,2000690000005,Zapallito,Verduras,1.0
+12,2000691000004,Zapallito,Verduras,1.0
+12,2000695000000,Papa,Verduras,1.0
+12,2000704000007,Manzana roja,Frutas,1.0
+12,2000708000003,Zanahoria,Verduras,1.0
+12,2000795000009,Berenjena,Verduras,1.0
+12,2000862000000,Chaucha,Verduras,1.0
+12,2000938000002,Sandía,Frutas,1.0
+12,2000943000004,Bondiola de cerdo,Cerdo,1.0
+12,2000945000002,Salame,Fiambres y quesos,1.0
+12,2001315800024,Limón,Frutas,0.666566
+12,2001317700025,Mandarina,Frutas,0.666863
+12,2001351700067,Naranja,Frutas,0.666863
+12,2003506900001,Papa,Verduras,1.0
+12,2003507000007,Morrón rojo,Verduras,1.0
+12,2003507200001,Tomate redondo,Verduras,1.0
+12,2003510000001,Tomate perita,Verduras,1.0
+12,2003511400008,Manzana roja,Frutas,1.0
+12,2003516700004,Jamón cocido,Fiambres y quesos,1.0
+12,2003516800001,Jamón cocido,Fiambres y quesos,1.0
+12,2003523700004,Jamón cocido,Fiambres y quesos,1.0
+12,2003569200001,Asado,Carne vacuna,1.0
+12,2003578100002,Tomate redondo,Verduras,1.0
+12,2003624200007,Salame,Fiambres y quesos,1.0
+12,2003634300001,Queso cremoso,Fiambres y quesos,1.0
+12,2003634500005,Queso port salut,Fiambres y quesos,1.0
+12,2003636200002,Queso sardo,Fiambres y quesos,1.0
+12,2003636300009,Queso reggianito,Fiambres y quesos,1.0
+12,2003636900001,Queso mozzarella,Fiambres y quesos,1.0
+12,2003637900000,Salame,Fiambres y quesos,1.0
+12,2003690800002,Jamón cocido,Fiambres y quesos,1.0
+12,2003690900009,Jamón cocido,Fiambres y quesos,1.0
+12,2003767200001,Queso cremoso,Fiambres y quesos,1.0
+12,2003775100003,Mortadela,Fiambres y quesos,1.0
+12,2003796400007,Salame,Fiambres y quesos,1.0
+12,2003861600004,Salame,Fiambres y quesos,1.0
+12,2003877300004,Naranja,Frutas,1.0
+12,2004016900000,Salmón rosado,Pescado,1.0
+12,2004138400006,Roast beef,Carne vacuna,1.0
+12,2004138500003,Bife ancho,Carne vacuna,1.0
+12,2004138700007,Asado,Carne vacuna,1.0
+12,2004139000007,Vacío,Carne vacuna,1.0
+12,2004139200001,Falda,Carne vacuna,1.0
+12,2004139400005,Matambre,Carne vacuna,1.0
+12,2004139500002,Paleta,Carne vacuna,1.0
+12,2004139600009,Nalga,Carne vacuna,1.0
+12,2004141200006,Carne picada común,Carne vacuna,1.0
+12,2004146300008,Osobuco,Carne vacuna,1.0
+12,2004146600009,Bife de chorizo,Carne vacuna,1.0
+12,2004231400002,Bola de lomo,Carne vacuna,1.0
+12,2004231700003,Cuadril,Carne vacuna,1.0
+12,2004231900007,Peceto,Carne vacuna,1.0
+12,2004348400001,Pollo entero,Pollo,1.0
+12,2010220000009,Tomate redondo,Verduras,1.0
+12,2012705000009,Papa,Verduras,1.0
+12,2016465000002,Jamón cocido,Fiambres y quesos,1.0
+12,2017047000007,Salame,Fiambres y quesos,1.0
+12,2017058000003,Salame,Fiambres y quesos,1.0
+12,2017138000008,Mortadela,Fiambres y quesos,1.0
+12,2017139000007,Salame,Fiambres y quesos,1.0
+12,2017162000005,Carré de cerdo,Cerdo,1.0
+12,2017374000008,Chorizo,Cerdo,1.0
+12,2017380000009,Morcilla,Cerdo,1.0
+12,2017414000005,Chuleta de cerdo,Cerdo,1.0
+12,2017445000005,Morcilla,Cerdo,1.0
+12,2017446000004,Salchicha parrillera,Cerdo,1.0
+12,2017447000003,Chorizo,Cerdo,1.0
+12,2017453000004,Queso sardo,Fiambres y quesos,1.0
+12,2017700000009,Chuleta de cerdo,Cerdo,1.0
+12,2017834000005,Filet de merluza,Pescado,1.0
+12,2017843000003,Filet de merluza,Pescado,1.0
+12,2027251000007,Queso sardo,Fiambres y quesos,1.0
+12,2027268000007,Queso port salut,Fiambres y quesos,1.0
+12,2027396000009,Salame,Fiambres y quesos,1.0
+12,2029804000007,Bife de chorizo,Carne vacuna,1.0
+12,2034878000006,Jamón cocido,Fiambres y quesos,1.0
+12,2034879000005,Jamón crudo,Fiambres y quesos,1.0
+12,2034892000006,Jamón cocido,Fiambres y quesos,1.0
+12,2034910000001,Salame,Fiambres y quesos,1.0
+12,2034935000000,Mortadela,Fiambres y quesos,1.0
+12,2034942000000,Mortadela,Fiambres y quesos,1.0
+12,2035010000007,Matambrito de cerdo,Cerdo,1.0
+12,2035015000002,Asado,Carne vacuna,1.0
+12,2035017000000,Bife de chorizo,Carne vacuna,1.0
+12,2035020000004,Peceto,Carne vacuna,1.0
+12,2035022000002,Vacío,Carne vacuna,1.0
+12,2036502000000,Chorizo,Cerdo,1.0
+12,2036503000009,Chorizo,Cerdo,1.0
+12,2036504000008,Morcilla,Cerdo,1.0
+12,2036505000007,Morcilla,Cerdo,1.0
+12,2036506000006,Morcilla,Cerdo,1.0
+12,2036508000004,Salchicha parrillera,Cerdo,1.0
+12,2051432000005,Banana,Frutas,1.0
+12,2053102000001,Papa,Verduras,1.0
+12,2059439000004,Pera,Frutas,1.0
+12,2061002000007,Manzana roja,Frutas,1.0
+12,2061005000004,Naranja,Frutas,1.0
+12,2061006000003,Naranja,Frutas,1.0
+12,2061007000002,Limón,Frutas,1.0
+12,2063135000008,Cebolla,Verduras,1.0
+12,2069607000002,Carne picada especial,Carne vacuna,1.0
+12,2071139000009,Zanahoria,Verduras,1.0
+12,2072040000003,Zapallo anco,Verduras,1.0
+12,2072041000002,Batata,Verduras,1.0
+12,2072042000001,Tomate redondo,Verduras,1.0
+12,2083237000003,Jamón cocido,Fiambres y quesos,1.0
+12,2083296000006,Salame,Fiambres y quesos,1.0
+12,2088440000000,Queso pategrás,Fiambres y quesos,1.0
+12,2088441000009,Queso port salut,Fiambres y quesos,1.0
+12,2093545000008,Papa,Verduras,1.0
+12,2095836000001,Mortadela,Fiambres y quesos,1.0
+12,2099937000007,Papa,Verduras,1.0
+12,2800000131555,Naranja,Frutas,0.666667
+15,2400120000009,Zapallito,Verduras,1.0
+15,2403866000005,Queso cremoso,Fiambres y quesos,1.0
+15,2404479000000,Lechuga,Verduras,1.0
+15,2406453000006,Batata,Verduras,1.0
+15,2406887000009,Queso cremoso,Fiambres y quesos,1.0
+15,2406888000008,Queso port salut,Fiambres y quesos,1.0
+15,2406900000009,Queso sardo,Fiambres y quesos,1.0
+15,2406925000008,Queso port salut,Fiambres y quesos,1.0
+15,2406926000007,Queso port salut,Fiambres y quesos,1.0
+15,2406932000008,Queso sardo,Fiambres y quesos,1.0
+15,2406934000006,Queso reggianito,Fiambres y quesos,1.0
+15,2406935000005,Queso port salut,Fiambres y quesos,1.0
+15,2406936000004,Queso pategrás,Fiambres y quesos,1.0
+15,2406937000003,Queso cremoso,Fiambres y quesos,1.0
+15,2407045000008,Matambrito de cerdo,Cerdo,1.0
+15,2407107000007,Queso sardo,Fiambres y quesos,1.0
+15,2490038000000,Banana,Frutas,1.0
+15,2490039000000,Manzana roja,Frutas,1.0
+15,2490061000000,Papa,Verduras,1.0
+15,2490062000000,Batata,Verduras,1.0
+15,2490063000000,Cebolla,Verduras,1.0
+15,2490074000000,Tomate perita,Verduras,1.0
+15,2490079000000,Lechuga,Verduras,1.0
+15,2490090000000,Papa,Verduras,1.0
+15,2490094000000,Papa,Verduras,1.0
+15,2490110000000,Banana,Frutas,1.0
+15,2490111000000,Manzana roja,Frutas,1.0
+15,2490112000000,Manzana verde,Frutas,1.0
+15,2490113000000,Pera,Frutas,1.0
+15,2490114000000,Limón,Frutas,1.0
+15,2490117000000,Naranja,Frutas,1.0
+15,2490118000000,Naranja,Frutas,1.0
+15,2490119000000,Mandarina,Frutas,1.0
+15,2490120000000,Zapallo anco,Verduras,1.0
+15,2490121000000,Zapallito,Verduras,1.0
+15,2490122000000,Zanahoria,Verduras,1.0
+15,2490123000000,Morrón rojo,Verduras,1.0
+15,2490124000000,Morrón verde,Verduras,1.0
+15,2490127000000,Tomate redondo,Verduras,1.0
+15,2490134000000,Acelga,Verduras,1.0
+15,2490141000000,Cebolla,Verduras,1.0
+15,2490143000000,Lechuga,Verduras,1.0
+15,2490144000000,Repollo blanco,Verduras,1.0
+15,2490145000000,Pepino,Verduras,1.0
+15,2490179000000,Berenjena,Verduras,1.0
+15,2490192000000,Sandía,Frutas,1.0
+15,2494087000000,Zapallo anco,Verduras,1.0
+2,2000098000003,Asado,Carne vacuna,1.0
+2,2021298000006,Morcilla,Cerdo,1.0
+2,2021299000005,Chorizo,Cerdo,1.0
+2,2024974000000,Morcilla,Cerdo,1.0
+2,2030904000002,Chorizo,Cerdo,1.0
+2,2030908000008,Morcilla,Cerdo,1.0
+2,2035001000009,Pollo entero,Pollo,1.0
+2,2035002000008,Pollo entero,Pollo,1.0
+2,2035080000006,Pechuga de pollo,Pollo,1.0
+2,2035084000002,Pata muslo y muslo,Pollo,1.0
+2,2035113000003,Chorizo,Cerdo,1.0
+2,2035165000006,Pechuga de pollo,Pollo,1.0
+2,2035169000002,Pollo entero,Pollo,1.0
+2,2035192000000,Pata muslo y muslo,Pollo,1.0
+2,2035358000004,Morcilla,Cerdo,1.0
+2,2035698000009,Chorizo,Cerdo,1.0
+2,2035700000003,Chorizo,Cerdo,1.0
+2,2035701000002,Morcilla,Cerdo,1.0
+2,2035702000001,Morcilla,Cerdo,1.0
+2,2035704000009,Chorizo,Cerdo,1.0
+2,2035705000008,Salchicha parrillera,Cerdo,1.0
+2,2036603000008,Tomate redondo,Verduras,1.0
+2,2036650000006,Falda,Carne vacuna,1.0
+2,2037061000005,Batata,Verduras,1.0
+2,2037072000001,Berenjena,Verduras,1.0
+2,2037079000004,Brócoli,Verduras,1.0
+2,2037087000003,Papa,Verduras,1.0
+2,2037104000009,Cebolla,Verduras,1.0
+2,2037130000004,Coliflor,Verduras,1.0
+2,2037212000007,Papa,Verduras,1.0
+2,2037290000005,Repollo blanco,Verduras,1.0
+2,2037320000005,Zapallito,Verduras,1.0
+2,2038121000003,Manzana verde,Frutas,1.0
+2,2038124000000,Manzana roja,Frutas,1.0
+2,2038291000001,Zapallo anco,Verduras,1.0
+2,2038296000006,Banana,Frutas,1.0
+2,2051570000004,Banana,Frutas,1.0
+2,2051961000002,Pollo entero,Pollo,1.0
+2,2051963000000,Pechuga de pollo,Pollo,1.0
+2,2051967000006,Pata muslo y muslo,Pollo,1.0
+2,2053288000000,Pata muslo y muslo,Pollo,1.0
+2,2055141000004,Chorizo,Cerdo,1.0
+2,2055142000003,Chorizo,Cerdo,1.0
+2,2055143000002,Morcilla,Cerdo,1.0
+2,2055148000007,Chorizo,Cerdo,1.0
+2,2060089000009,Asado,Carne vacuna,1.0
+2,2060090000005,Falda,Carne vacuna,1.0
+2,2060093000002,Roast beef,Carne vacuna,1.0
+2,2060111000007,Matambre,Carne vacuna,1.0
+2,2060113000005,Vacío,Carne vacuna,1.0
+2,2060117000001,Vacío,Carne vacuna,1.0
+2,2064851000006,Paleta,Carne vacuna,1.0
+2,2064856000001,Bola de lomo,Carne vacuna,1.0
+2,2069974000001,Chorizo,Cerdo,1.0
+2,2069976000009,Chorizo,Cerdo,1.0
+2,2069978000007,Morcilla,Cerdo,1.0
+2,2070021000004,Manzana roja,Frutas,1.0
+2,2070926000000,Zapallo anco,Verduras,1.0
+2,2070928000008,Zanahoria,Verduras,1.0
+2,2084055000008,Chorizo,Cerdo,1.0
+2,2096483000000,Chorizo,Cerdo,1.0
+2,2096484000009,Chorizo,Cerdo,1.0
+2,2096485000008,Chorizo,Cerdo,1.0
+2,2096486000007,Chorizo,Cerdo,1.0
+2,2096487000006,Chorizo,Cerdo,1.0
+2,2096488000005,Chorizo,Cerdo,1.0
+2,2096489000004,Salchicha parrillera,Cerdo,1.0
+2,2096490000000,Morcilla,Cerdo,1.0
+2,2096492000008,Morcilla,Cerdo,1.0
+2,2096493000007,Morcilla,Cerdo,1.0
+2,2097195000005,Chorizo,Cerdo,1.0

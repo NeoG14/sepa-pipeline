@@ -23,8 +23,7 @@ import duckdb
 from ingesta import config
 
 BASE_NUBE = "sepa_nube"
-TABLAS = ["dim_productos", "fct_precios_historial", "fct_canasta_nacional", "fct_canasta_provincia", "canasta",
-          "fct_cobertura", "cadenas"]
+TABLAS = ["dim_productos", "fct_precios_historial", "fct_canasta_nacional", "fct_canasta_provincia_productos", "fct_canasta_provincia", "canasta", "fct_cobertura", "cadenas", "rubros", "fct_canasta_provincia_grupo", "fct_precio_kilo_provincia", "fct_indice_cadena"]
 log = logging.getLogger("ingesta")
 
 

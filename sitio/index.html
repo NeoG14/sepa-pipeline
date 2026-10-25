@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Precios de supermercados</title>
+  <meta name="description" content="Precios de lista de las cadenas de supermercados de Argentina, producto por producto y provincia por provincia, con datos oficiales de SEPA.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="ancho fila-encabezado">
+      <div class="marca-sitio">
+        <a href="#inicio" class="logo" id="logo">Precios de supermercados</a>
+        <span class="lema" id="lema">Datos oficiales de SEPA</span>
+      </div>
+      <form id="formulario-encabezado" class="buscador-encabezado" role="search">
+        <label for="texto-encabezado" class="solo-lectores">Buscar un producto</label>
+        <input id="texto-encabezado" type="search" placeholder="Buscar un producto…" autocomplete="off">
+        <button type="submit" aria-label="Buscar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+        </button>
+      </form>
+      <nav aria-label="Secciones" class="menu">
+        <a href="#inicio">Hoy</a>
+        <a href="#canasta">Canasta</a>
+        <a href="#como">Cómo se hace</a>
+      </nav>
+      <label class="provincia">
+        <span class="texto-provincia">Provincia</span>
+        <select id="provincia"></select>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hoy: para qué sirve el sitio, cuánto cambiaron los precios, qué cadena conviene según lo que comprás y el precio por kilo -->
+    <section id="portada" class="ancho bloque pila-grande">
+      <div class="intro">
+        <h1>Seguí el precio de cualquier producto del súper</h1>
+        <p class="bajada">Buscá un producto y mirá cómo cambió su precio día por día en cada cadena de tu provincia. Son los precios de lista que las cadenas informan todos los días a la Secretaría de Comercio (SEPA).</p>
+        <a href="#buscar" id="ir-buscador">Buscar un producto →</a>
+      </div>
+      <p class="bajada" id="portada-aviso" hidden></p>
+
+      <section class="canasta-evolucion" id="canasta-evolucion" aria-labelledby="evolucion-titulo" hidden>
+        <h2 id="evolucion-titulo">¿Cuánto cambiaron los precios en <span class="nombre-provincia"></span>?</h2>
+        <p class="bajada-chica" id="evolucion-resumen"></p>
+        <div class="filtros-cadenas"><span class="nota">Tocá una cadena para ocultarla o mostrarla</span><div class="filtros" id="evolucion-cadenas"></div></div>
+        <div class="grafico alto"><canvas id="grafico-evolucion" role="img" aria-label="Cambio acumulado del precio en cada cadena desde el primer día"></canvas></div>
+        <p class="nota" id="evolucion-nota"></p>
+      </section>
+
+      <section class="grupos" id="grupos" aria-labelledby="grupos-titulo" hidden>
+        <div class="apertura-grupos">
+          <h2 id="grupos-titulo">¿Qué cadena conviene según lo que comprás en <span class="nombre-provincia"></span>?</h2>
+          <p class="bajada-chica" id="grupos-bajada"></p>
+        </div>
+        <div class="grilla-grupos" id="grupos-lista"></div>
+        <p class="nota">Cada tarjeta compara los productos que venden todas las cadenas de la provincia, con el precio de cada cadena contra la mediana del producto. «+2,5 %» es cuánto más cara es esa cadena que la más barata del grupo. Las cadenas a menos de 2 % de la más barata se muestran juntas: con pocos productos por grupo, el orden entre ellas cambia de un día a otro. En el ranking de arriba, que usa todos los productos de la comparación, el empate es de menos de 0,5 %. No incluye productos frescos ni los que vende una sola cadena. Se muestran los tipos de producto con al menos 30 productos comparables en la provincia.</p>
+      </section>
+
+      <section class="kilo" id="kilo" aria-labelledby="kilo-titulo" hidden>
+        <h2 id="kilo-titulo">Carnes, quesos, frutas y verduras: precio por kilo</h2>
+        <p class="bajada-chica" id="kilo-bajada"></p>
+        <div class="kilo-control">
+          <label for="kilo-grupo">Sección</label>
+          <select id="kilo-grupo"></select>
+          <p class="kilo-resumen" id="kilo-resumen" aria-live="polite"></p>
+        </div>
+        <div class="tabla-deslizable"><table class="kilo-tabla" id="kilo-tabla"></table></div>
+        <p class="nota">Todos los precios son por kilo (mediana entre sucursales del precio de lista). En azul, el más barato de cada fila. En gris, el precio de un solo producto de esa cadena: puede ser de otra marca o presentación. «Bajó X %»: el precio de lista de hoy es al menos 20 % menor que el de las dos semanas anteriores. «Promoción»: la cadena informa un precio promocional en la mayoría de sus sucursales; se muestra el precio de lista, y la promoción puede tener condiciones. Fiambres y quesos mezclan marcas. Si una cadena no aparece en un producto, no lo informa al peso (DIA no se incluye en carne vacuna: sus precios por kilo en SEPA no son confiables). Solo se muestran los productos que venden al menos dos cadenas; el número de cada sección es cuántos son.</p>
+      </section>
+
+    </section>
+
+    <!-- Buscar: los resultados como tabla de precios por cadena -->
+    <section id="resultados" class="ancho bloque" hidden>
+      <form id="formulario-resultados" class="buscador-resultados" role="search">
+        <label for="texto-resultados" class="solo-lectores">Buscar un producto</label>
+        <input id="texto-resultados" type="search" placeholder="Leche, yerba, aceite… o una marca" autocomplete="off" disabled>
+        <button type="submit" class="boton">Buscar</button>
+      </form>
+
+      <div class="titulo-resultados">
+        <h1 id="resultados-titulo"></h1>
+        <div class="filtros" aria-label="Filtros">
+          <button type="button" class="chip-filtro" id="comparables" aria-pressed="true">Comparables</button>
+          <button type="button" class="chip-filtro" id="con-cambios" aria-pressed="false">Con cambios en <span class="dias-grafico"></span> días</button>
+          <details class="marcas" id="marcas-plegable">
+            <summary class="chip-filtro">Marca <span id="marcas-cuenta"></span></summary>
+            <div class="panel-marcas" id="marcas"></div>
+          </details>
+          <label class="orden">
+            <span class="solo-lectores">Ordenar por</span>
+            <select id="orden">
+              <option value="cadenas">Más cadenas primero</option>
+              <option value="precio">Precio más bajo</option>
+              <option value="diferencia">Más diferencia entre cadenas</option>
+              <option value="nombre">Nombre</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="leyenda-resultados" id="leyenda-resultados">
+        <span><i class="linea azul"></i><i class="caja azul"></i>la más barata hoy</span>
+        <span><i class="linea naranja"></i><i class="caja naranja"></i>la más cara hoy</span>
+        <span><i class="linea gris"></i>otra cadena que cambió</span>
+        <span>— no lo vende en la provincia</span>
+        <span><i class="caja aislada"></i>precio muy distinto al resto (no cuenta)</span>
+        <span class="derecha">precio de hoy: mediana entre sucursales · gráfico: <span id="leyenda-dias"></span></span>
+      </div>
+
+      <div class="tabla-resultados" id="tabla" role="table" aria-label="Resultados de la búsqueda"></div>
+      <p class="nota" id="resultados-nota"></p>
+    </section>
+
+    <section id="producto" class="ancho bloque" hidden>
+      <a href="#buscar" class="volver" id="volver">← Volver a la búsqueda</a>
+      <h1 id="producto-nombre"></h1>
+      <p class="nota" id="producto-detalle"></p>
+      <div class="tarjeta">
+        <h2>Hoy en <span class="nombre-provincia"></span></h2>
+        <p class="nota" id="producto-aviso"></p>
+        <div class="tabla-deslizable"><table id="producto-hoy"></table></div>
+      </div>
+      <div class="tarjeta">
+        <h2>Cómo cambió el precio</h2>
+        <div class="filtros-cadenas"><span class="nota">Tocá una cadena para ocultarla o mostrarla: el gráfico se ajusta a las que quedan</span><div class="filtros" id="producto-cadenas"></div></div>
+        <div class="grafico alto"><canvas id="grafico-producto" role="img" aria-label="Precio de cada cadena a lo largo de los días"></canvas><div class="cartel-grafico" id="producto-tip" hidden></div></div>
+        <p class="nota" id="producto-iguales"></p>
+        <p class="nota">El precio queda plano hasta que cambia; cada punto es un cambio de precio. Pasá el mouse (o tocá) por un día para ver el precio de todas las cadenas ese día. Si una cadena no informa el producto por más de 7 días, se marca como no disponible.</p>
+      </div>
+    </section>
+
+    <section id="canasta" class="ancho bloque" hidden>
+      <div class="titulo-seccion">
+        <h1>Qué cadena es más barata en <span class="nombre-provincia"></span></h1>
+        <a href="#como">Cómo se calcula →</a>
+      </div>
+      <p class="nota" id="provincia-nota"></p>
+      <div class="tarjeta">
+        <div class="titulo-tarjeta"><h2>Ranking del día</h2><span class="nota" id="provincia-dia"></span></div>
+        <div class="tabla-deslizable"><table id="provincia-ranking"></table></div>
+        <p class="nota">Índice: en cada producto, el precio de la cadena contra la mediana de las cadenas de la provincia; después, el promedio (media geométrica). Cada producto pesa lo mismo, sea caro o barato. Menos de 0,5 puntos de diferencia es un empate.</p>
+      </div>
+
+      <section class="comparacion" aria-labelledby="comparacion-titulo">
+        <div class="titulo-resultados">
+          <h2 id="comparacion-titulo">Los productos que se comparan</h2>
+          <label class="orden">
+            <span class="solo-lectores">Grupo</span>
+            <select id="grupo-comparacion"></select>
+          </label>
+          <label class="orden">
+            <span class="solo-lectores">Ordenar por</span>
+            <select id="orden-comparacion">
+              <option value="diferencia">Más diferencia entre cadenas</option>
+              <option value="nombre">Nombre</option>
+              <option value="precio">Precio más bajo</option>
+              <option value="cambios">Con cambios primero</option>
+            </select>
+          </label>
+        </div>
+        <div class="tabla-resultados" id="tabla-comparacion" role="table" aria-label="Productos de la comparación"></div>
+        <nav class="paginas" id="paginas" aria-label="Páginas de la lista"></nav>
+      </section>
+    </section>
+  </main>
+
+  <footer id="como" class="pie">
+    <div class="ancho">
+      <h2>Cómo se hace</h2>
+      <p>Todos los días, las cadenas informan a la Secretaría de Comercio el precio de cada producto en cada sucursal (<a href="https://datos.produccion.gob.ar/dataset/sepa-precios">SEPA</a>). Este sitio baja esos datos, toma la mediana del precio de lista de cada cadena en cada provincia y guarda solo los días en que cambia. No incluye promociones.</p>
+      <p>En cada provincia, las cadenas se comparan con todos los productos que venden todas ellas ese día, con un índice de precios en el que cada producto pesa lo mismo. Código, datos y metodología en <a href="https://github.com/NeoG14/sepa-pipeline">GitHub</a>.</p>
+      <p class="pie-fecha" id="publicado"></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

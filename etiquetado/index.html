@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etiquetado de rubros</title>
+<!--
+  Página local para etiquetar a mano la muestra del paso 4 del plan de categorización.
+
+  Lee productos.json (lo arma scripts/elegir_muestra_etiquetado.py) y guarda las etiquetas en
+  etiquetas.csv, en esta misma carpeta. Se sirve con:
+      python -m http.server 8001 --directory etiquetado
+  y se abre http://localhost:8001 en Chrome o Edge (Firefox no deja escribir archivos: ahí
+  queda el botón Descargar).
+
+  Las etiquetas se guardan en tres lugares: en el navegador después de cada producto, en
+  etiquetas.csv si está conectado y con el botón Descargar. Al abrir etiquetas.csv se mezcla lo
+  que tiene con lo del navegador (gana la etiqueta más nueva), así nada se pisa.
+
+  A propósito no muestra el rubro que proponen las reglas ni si el producto es de desarrollo o
+  de prueba: ver la guía de etiquetado.
+-->
+<style>
+:root {
+  --fondo: #f6f5f2; --panel: #ffffff; --texto: #1f1e1c; --suave: #6b6862; --borde: #dedbd4;
+  --acento: #2f6f4f; --acento-suave: #e3efe8; --aviso: #9a5b00; --aviso-suave: #fbf0dc;
+  --error: #a33a2a; --chip: #f0eee9; --resaltado: #d6e9de;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #181816; --panel: #22221f; --texto: #ecebe7; --suave: #a5a29b; --borde: #3a3934;
+    --acento: #7cc39d; --acento-suave: #24382d; --aviso: #e6b35c; --aviso-suave: #3a2f1c;
+    --error: #ef8a78; --chip: #2d2c28; --resaltado: #2f4a3a;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); color: var(--texto);
+       font: 15px/1.45 system-ui, "Segoe UI", sans-serif; }
+header { position: sticky; top: 0; z-index: 2; background: var(--panel); border-bottom: 1px solid var(--borde);
+         padding: 10px 20px; display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; }
+header h1 { font-size: 16px; margin: 0; }
+.progreso { flex: 1 1 260px; }
+.barra { height: 6px; background: var(--chip); border-radius: 3px; overflow: hidden; margin-top: 4px; }
+.barra div { height: 100%; background: var(--acento); width: 0; transition: width .2s; }
+.guardado { font-size: 13px; color: var(--suave); }
+.guardado.alerta { color: var(--aviso); }
+main { max-width: 1180px; margin: 0 auto; padding: 18px 20px 40px; display: grid;
+       grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 18px; }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+section { background: var(--panel); border: 1px solid var(--borde); border-radius: 10px; padding: 16px 18px; }
+h2 { font-size: 20px; margin: 4px 0 6px; line-height: 1.25; }
+.meta { color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.insignia { display: inline-block; padding: 1px 8px; border-radius: 10px; background: var(--chip); font-size: 12px; }
+.insignia.pesable { background: var(--aviso-suave); color: var(--aviso); }
+table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+th, td { text-align: left; padding: 7px 6px; border-top: 1px solid var(--borde); vertical-align: top; }
+th { color: var(--suave); font-weight: 500; font-size: 12px; border-top: 0; }
+td.precio, th.precio { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.etiqueta-actual { margin: 0 0 12px; padding: 8px 10px; border-radius: 8px; background: var(--acento-suave); }
+.etiqueta-actual.vacia { background: var(--chip); color: var(--suave); }
+input[type=search], input[type=text] { width: 100%; padding: 9px 11px; font: inherit; color: inherit;
+  background: var(--fondo); border: 1px solid var(--borde); border-radius: 8px; }
+input:focus { outline: 2px solid var(--acento); outline-offset: -1px; }
+.rubros { margin-top: 10px; max-height: 52vh; overflow: auto; padding-right: 4px; }
+.grupo { margin: 10px 0 4px; font-size: 12px; color: var(--suave); text-transform: uppercase; letter-spacing: .04em; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+button { font: inherit; color: inherit; cursor: pointer; border: 1px solid var(--borde); background: var(--chip);
+         border-radius: 7px; padding: 5px 10px; }
+button:hover { border-color: var(--acento); }
+button:disabled { opacity: .45; cursor: default; }
+button.elegido { background: var(--acento); color: var(--panel); border-color: var(--acento); }
+button.principal { background: var(--acento); color: var(--panel); border-color: var(--acento); }
+.resultado { display: block; width: 100%; text-align: left; margin-bottom: 4px; }
+.resultado.activo { background: var(--resaltado); border-color: var(--acento); }
+.resultado small { display: block; color: var(--suave); font-size: 12px; }
+.fila { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+.fila label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.mensaje { margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: var(--aviso-suave); color: var(--aviso); }
+.mensaje:empty { display: none; }
+.ayuda { color: var(--suave); font-size: 13px; margin-top: 12px; }
+kbd { font: 12px ui-monospace, monospace; padding: 1px 5px; border: 1px solid var(--borde); border-radius: 4px; background: var(--chip); }
+.resumen { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; color: var(--suave); }
+.resumen b { color: var(--texto); }
+#carga { padding: 40px 20px; text-align: center; color: var(--suave); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Etiquetado de rubros</h1>
+  <div class="progreso">
+    <div id="progreso-texto">Cargando…</div>
+    <div class="barra"><div id="barra"></div></div>
+  </div>
+  <button id="ronda" disabled title="Se habilita al terminar los 600">Ronda de consistencia</button>
+  <button id="conectar">Abrir etiquetas.csv</button>
+  <button id="crear">Crear etiquetas.csv</button>
+  <button id="descargar">Descargar</button>
+  <span id="guardado" class="guardado"></span>
+</header>
+
+<div id="carga">Cargando productos.json…</div>
+
+<main id="principal" hidden>
+  <section>
+    <div class="meta" id="ubicacion"></div>
+    <h2 id="nombre"></h2>
+    <div class="meta" id="datos"></div>
+    <table>
+      <thead><tr><th>Cadena</th><th>Descripción</th><th>Marca</th><th class="precio">Precio</th></tr></thead>
+      <tbody id="descripciones"></tbody>
+    </table>
+    <div class="fila">
+      <button id="anterior">← Anterior</button>
+      <button id="siguiente">Siguiente →</button>
+      <button id="sin-etiquetar">Ir al primero sin etiquetar</button>
+    </div>
+  </section>
+
+  <section>
+    <div id="actual" class="etiqueta-actual vacia"></div>
+    <input id="buscar" type="search" autocomplete="off"
+           placeholder="Buscá un rubro: Enter elige el resaltado, ↑ ↓ para moverte">
+    <div id="rubros" class="rubros"></div>
+    <div class="fila">
+      <button id="no-se">No sé</button>
+      <button id="fuera">Fuera de la taxonomía</button>
+      <label><input type="checkbox" id="variante"> Variante (las cadenas describen productos distintos)</label>
+    </div>
+    <div class="fila"><input id="nota" type="text" placeholder="Nota (obligatoria si es fuera de la taxonomía)"></div>
+    <div id="mensaje" class="mensaje"></div>
+    <p class="ayuda"><kbd>Enter</kbd> elige el rubro resaltado y pasa al siguiente ·
+      <kbd>Esc</kbd> borra la búsqueda · <kbd>RePág</kbd> <kbd>AvPág</kbd> anterior y siguiente ·
+      pasá el mouse sobre un rubro para ver su descripción completa.</p>
+  </section>
+
+  <div class="resumen" id="resumen"></div>
+</main>
+
+<script>
+"use strict";
+
+const CLAVE_LOCAL = "sepa-etiquetado-v1";
+const TAMANIO_TANDA = 100;
+const COLUMNAS = ["clave", "estrato", "rubro", "variante", "nota", "ronda", "fecha"];
+const ESPECIALES = { no_se: "No sé", fuera_taxonomia: "Fuera de la taxonomía" };
+
+let rubros = [];              // [{grupo, rubro, descripcion}]
+let listas = { 1: [], 2: [] }; // productos en el orden de cada ronda
+let estado = { ronda: 1, indice: 0, etiquetas: { 1: {}, 2: {} } };
+let archivo = null;           // FileSystemFileHandle de etiquetas.csv, si está conectado
+let escritura = Promise.resolve();
+let resultados = [];          // rubros que muestra la búsqueda
+let activo = 0;               // resultado resaltado
+
+const $ = (id) => document.getElementById(id);
+const normalizar = (s) => (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const pesos = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" });
+
+// Mezcla con semilla fija (mulberry32): la ronda 2 sale siempre en el mismo orden,
+// distinto del de la ronda 1
+function mezclar(lista, semilla) {
+  let a = semilla;
+  const azar = () => {
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const copia = lista.slice();
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(azar() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+// ---------- guardar y leer ----------
+
+function guardarLocal() {
+  try { localStorage.setItem(CLAVE_LOCAL, JSON.stringify(estado)); } catch (e) { /* sin almacenamiento */ }
+}
+
+function leerLocal() {
+  try {
+    const guardado = JSON.parse(localStorage.getItem(CLAVE_LOCAL));
+    if (guardado && guardado.etiquetas) estado = guardado;
+  } catch (e) { /* vacío o bloqueado */ }
+}
+
+function campoCsv(valor) {
+  const texto = valor == null ? "" : String(valor);
+  return /[",\n\r]/.test(texto) ? '"' + texto.replace(/"/g, '""') + '"' : texto;
+}
+
+function aCsv() {
+  const filas = [COLUMNAS.join(",")];
+  for (const ronda of [1, 2]) {
+    for (const p of listas[ronda]) {
+      const e = estado.etiquetas[ronda][p.clave];
+      if (!e) continue;
+      filas.push([p.clave, p.estrato, e.rubro, e.variante ? "si" : "no", e.nota, ronda, e.fecha]
+        .map(campoCsv).join(","));
+    }
+  }
+  return filas.join("\n") + "\n";
+}
+
+function leerCsv(texto) {
+  const filas = [];
+  let fila = [], campo = "", comillas = false;
+  for (let i = 0; i < texto.length; i++) {
+    const c = texto[i];
+    if (comillas) {
+      if (c === '"' && texto[i + 1] === '"') { campo += '"'; i++; }
+      else if (c === '"') comillas = false;
+      else campo += c;
+    } else if (c === '"') comillas = true;
+    else if (c === ",") { fila.push(campo); campo = ""; }
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && texto[i + 1] === "\n") i++;
+      fila.push(campo); campo = "";
+      if (fila.some((x) => x !== "")) filas.push(fila);
+      fila = [];
+    } else campo += c;
+  }
+  if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
+  const [encabezado, ...datos] = filas;
+  return datos.map((f) => Object.fromEntries(encabezado.map((col, i) => [col, f[i] ?? ""])));
+}
+
+// Mezcla las etiquetas de un CSV con las del navegador: gana la más nueva
+function mezclarCsv(texto) {
+  let agregadas = 0;
+  for (const f of leerCsv(texto)) {
+    const ronda = Number(f.ronda) === 2 ? 2 : 1;
+    const actual = estado.etiquetas[ronda][f.clave];
+    if (!actual || (f.fecha || "") > (actual.fecha || "")) {
+      estado.etiquetas[ronda][f.clave] = { rubro: f.rubro, variante: f.variante === "si", nota: f.nota, fecha: f.fecha };
+      agregadas++;
+    }
+  }
+  return agregadas;
+}
+
+function escribirArchivo() {
+  if (!archivo) { mostrarGuardado(); return; }
+  // Las escrituras van en fila: si se etiqueta rápido, ninguna pisa a otra a medias
+  escritura = escritura.then(async () => {
+    const w = await archivo.createWritable();
+    await w.write(aCsv());
+    await w.close();
+    mostrarGuardado(new Date());
+  }).catch((e) => {
+    mostrarGuardado(null, "No se pudo escribir etiquetas.csv: " + e.message);
+  });
+}
+
+function mostrarGuardado(cuando, error) {
+  const el = $("guardado");
+  if (error) { el.textContent = error; el.className = "guardado alerta"; return; }
+  if (!archivo) {
+    el.textContent = "Solo en este navegador: abrí o creá etiquetas.csv";
+    el.className = "guardado alerta";
+    return;
+  }
+  el.className = "guardado";
+  el.textContent = cuando ? `Guardado en ${archivo.name} a las ${cuando.toLocaleTimeString("es-AR")}` : `Conectado a ${archivo.name}`;
+}
+
+async function abrirArchivo() {
+  if (!window.showOpenFilePicker) return avisoSinArchivos();
+  try {
+    const [h] = await window.showOpenFilePicker({ types: [{ description: "CSV", accept: { "text/csv": [".csv"] } }] });
+    if ((await h.requestPermission({ mode: "readwrite" })) !== "granted") return;
+    const agregadas = mezclarCsv(await (await h.getFile()).text());
+    archivo = h;
+    guardarLocal();
+    escribirArchivo();
+    mostrar();
+    mensaje(`${h.name}: ${agregadas} etiquetas tomadas del archivo; el archivo ahora tiene todo.`);
+  } catch (e) { if (e.name !== "AbortError") mensaje("No se pudo abrir: " + e.message); }
+}
+
+async function crearArchivo() {
+  if (!window.showSaveFilePicker) return avisoSinArchivos();
+  try {
+    const h = await window.showSaveFilePicker({ suggestedName: "etiquetas.csv",
+      types: [{ description: "CSV", accept: { "text/csv": [".csv"] } }] });
+    // Si se eligió un archivo que ya tenía etiquetas, primero se leen: no se pierde nada
+    const previo = await (await h.getFile()).text();
+    if (previo.trim()) mezclarCsv(previo);
+    archivo = h;
+    guardarLocal();
+    escribirArchivo();
+    mostrar();
+  } catch (e) { if (e.name !== "AbortError") mensaje("No se pudo crear: " + e.message); }
+}
+
+function avisoSinArchivos() {
+  mensaje("Este navegador no deja escribir archivos (pasa en Firefox). Usá Chrome o Edge, o el botón Descargar.");
+}
+
+function descargar() {
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(new Blob([aCsv()], { type: "text/csv" }));
+  enlace.download = "etiquetas.csv";
+  enlace.click();
+  URL.revokeObjectURL(enlace.href);
+}
+
+// ---------- etiquetar ----------
+
+const lista = () => listas[estado.ronda];
+const producto = () => lista()[estado.indice];
+const etiquetaDe = (p) => estado.etiquetas[estado.ronda][p.clave];
+const etiquetados = (ronda) => listas[ronda].filter((p) => estado.etiquetas[ronda][p.clave]).length;
+
+function etiquetar(rubro) {
+  const p = producto();
+  const nota = $("nota").value.trim();
+  if (rubro === "fuera_taxonomia" && !nota) {
+    mensaje("Escribí en la nota qué es el producto: sirve para decidir si hace falta un rubro nuevo.");
+    $("nota").focus();
+    return;
+  }
+  estado.etiquetas[estado.ronda][p.clave] = {
+    rubro, variante: $("variante").checked, nota, fecha: new Date().toISOString(),
+  };
+  const fin = estado.ronda === 1 && (estado.indice + 1) % TAMANIO_TANDA === 0;
+  const tanda = (estado.indice + 1) / TAMANIO_TANDA;
+  if (estado.indice < lista().length - 1) estado.indice++;
+  guardarLocal();  // después de avanzar: al recargar se vuelve al producto siguiente
+  escribirArchivo();
+  mostrar();
+  if (fin) {
+    mensaje(`Terminaste la tanda ${tanda}. Antes de seguir: anotá los casos nuevos en la guía ` +
+            "y decidí qué hacer con los «fuera de la taxonomía» de esta tanda.");
+  }
+}
+
+// Cambiar variante o nota en un producto ya etiquetado actualiza su etiqueta
+function actualizarDetalle() {
+  const e = etiquetaDe(producto());
+  if (!e) return;
+  e.variante = $("variante").checked;
+  e.nota = $("nota").value.trim();
+  e.fecha = new Date().toISOString();
+  guardarLocal();
+  escribirArchivo();
+  mostrarActual();
+}
+
+function ir(indice) {
+  estado.indice = Math.max(0, Math.min(lista().length - 1, indice));
+  guardarLocal();
+  mostrar();
+}
+
+function primeroSinEtiquetar() {
+  const i = lista().findIndex((p) => !etiquetaDe(p));
+  if (i >= 0) ir(i); else mensaje("No queda ninguno sin etiquetar en esta ronda.");
+}
+
+function cambiarRonda() {
+  estado.ronda = estado.ronda === 1 ? 2 : 1;
+  estado.indice = 0;
+  guardarLocal();
+  mostrar();
+  if (estado.ronda === 2) {
+    primeroSinEtiquetar();
+    mensaje("Ronda de consistencia: 50 productos ya etiquetados, en otro orden y sin la primera etiqueta. " +
+            "La guía pide hacerla unos días después de terminar.");
+  }
+}
+
+// ---------- búsqueda de rubros ----------
+
+// Puntaje de un rubro para lo buscado (menor es mejor); null si no coincide.
+// La parte "No: ..." de la descripción no cuenta: nombra justo lo que NO va en ese rubro.
+function puntaje(r, q) {
+  const nombre = normalizar(r.rubro);
+  if (nombre.startsWith(q)) return 0;
+  if (nombre.includes(q)) return 1;
+  if (normalizar(r.grupo).includes(q)) return 2;
+  const descripcion = normalizar(r.descripcion.split(/\bNo:/)[0]);
+  return q.split(/\s+/).every((palabra) => descripcion.includes(palabra)) ? 3 : null;
+}
+
+function mostrarRubros() {
+  const q = normalizar($("buscar").value.trim());
+  const elegido = (etiquetaDe(producto()) || {}).rubro;
+  const caja = $("rubros");
+  caja.innerHTML = "";
+  if (!q) {
+    resultados = [];
+    let grupo = null, chips = null;
+    for (const r of rubros) {
+      if (r.grupo !== grupo) {
+        grupo = r.grupo;
+        caja.insertAdjacentHTML("beforeend", `<div class="grupo"></div>`);
+        caja.lastElementChild.textContent = grupo;
+        chips = document.createElement("div");
+        chips.className = "chips";
+        caja.appendChild(chips);
+      }
+      const b = document.createElement("button");
+      b.textContent = r.rubro;
+      b.title = r.descripcion;
+      if (r.rubro === elegido) b.classList.add("elegido");
+      b.onclick = () => etiquetar(r.rubro);
+      chips.appendChild(b);
+    }
+    return;
+  }
+  resultados = rubros
+    .map((r, i) => ({ r, i, s: puntaje(r, q) }))
+    .filter((x) => x.s !== null)
+    .sort((a, b) => a.s - b.s || a.i - b.i)
+    .map((x) => x.r);
+  activo = Math.min(activo, Math.max(0, resultados.length - 1));
+  if (!resultados.length) {
+    caja.innerHTML = `<p class="ayuda">Ningún rubro coincide. Si sabés qué es pero no tiene rubro, usá «Fuera de la taxonomía».</p>`;
+    return;
+  }
+  resultados.forEach((r, i) => {
+    const b = document.createElement("button");
+    b.className = "resultado" + (i === activo ? " activo" : "") + (r.rubro === elegido ? " elegido" : "");
+    b.innerHTML = "<span></span><small></small>";
+    b.firstChild.textContent = `${r.rubro} · ${r.grupo}`;
+    b.lastChild.textContent = r.descripcion;
+    b.onclick = () => etiquetar(r.rubro);
+    caja.appendChild(b);
+  });
+  caja.querySelector(".activo")?.scrollIntoView({ block: "nearest" });
+}
+
+// ---------- pantalla ----------
+
+function mensaje(texto) { $("mensaje").textContent = texto || ""; }
+
+function mostrarActual() {
+  const e = etiquetaDe(producto());
+  const el = $("actual");
+  if (!e) { el.className = "etiqueta-actual vacia"; el.textContent = "Sin etiquetar"; return; }
+  const r = rubros.find((x) => x.rubro === e.rubro);
+  el.className = "etiqueta-actual";
+  el.textContent = "Etiqueta: " + (ESPECIALES[e.rubro] || `${e.rubro} (${r ? r.grupo : "rubro que ya no está en rubros.csv"})`) +
+    (e.variante ? " · variante" : "") + (e.nota ? ` · nota: ${e.nota}` : "");
+}
+
+function mostrar() {
+  const p = producto();
+  const total = lista().length;
+  const hechos = etiquetados(estado.ronda);
+  const nombreRonda = estado.ronda === 1 ? "Ronda 1" : "Ronda de consistencia";
+  const tanda = estado.ronda === 1
+    ? ` · tanda ${Math.floor(estado.indice / TAMANIO_TANDA) + 1} de ${Math.ceil(total / TAMANIO_TANDA)}`
+    : "";
+  $("progreso-texto").textContent = `${nombreRonda}: ${hechos} de ${total} etiquetados${tanda}`;
+  $("barra").style.width = (100 * hechos / total) + "%";
+
+  $("ubicacion").textContent = `Producto ${estado.indice + 1} de ${total}`;
+  $("nombre").textContent = p.nombre;
+  const datos = $("datos");
+  datos.innerHTML = "";
+  const partes = [
+    p.marca ? `Marca: ${p.marca}` : "Sin marca",
+    `${p.cadenas} ${p.cadenas === 1 ? "cadena" : "cadenas"}`,
+    p.precio_mediano != null ? `Precio mediano: ${pesos.format(p.precio_mediano)}` : "Sin precio",
+  ];
+  for (const t of partes) { const s = document.createElement("span"); s.textContent = t; datos.appendChild(s); }
+  const insignia = document.createElement("span");
+  insignia.className = "insignia" + (p.pesable ? " pesable" : "");
+  insignia.textContent = p.pesable ? "pesable (código de balanza)" : p.estrato;
+  datos.appendChild(insignia);
+
+  const cuerpo = $("descripciones");
+  cuerpo.innerHTML = "";
+  for (const d of p.descripciones) {
+    const fila = cuerpo.insertRow();
+    fila.insertCell().textContent = d.cadena;
+    fila.insertCell().textContent = d.descripcion || "—";
+    fila.insertCell().textContent = d.marca || "—";
+    const precio = fila.insertCell();
+    precio.className = "precio";
+    precio.textContent = d.precio != null ? pesos.format(d.precio) : "—";
+  }
+
+  const e = etiquetaDe(p);
+  $("variante").checked = e ? e.variante : false;
+  $("nota").value = e ? e.nota : "";
+  $("buscar").value = "";
+  activo = 0;
+  mensaje("");
+  mostrarActual();
+  mostrarRubros();
+  $("anterior").disabled = estado.indice === 0;
+  $("siguiente").disabled = estado.indice === total - 1;
+  $("ronda").disabled = estado.ronda === 1 && etiquetados(1) < listas[1].length;
+  $("ronda").textContent = estado.ronda === 1 ? "Ronda de consistencia" : "Volver a la ronda 1";
+  mostrarResumen();
+  $("buscar").focus();
+}
+
+function mostrarResumen() {
+  const etiquetas = Object.values(estado.etiquetas[1]);
+  const n = etiquetas.length || 1;
+  const noSe = etiquetas.filter((e) => e.rubro === "no_se").length;
+  const fuera = etiquetas.filter((e) => e.rubro === "fuera_taxonomia").length;
+  const variantes = etiquetas.filter((e) => e.variante).length;
+  const partes = [
+    `Ronda 1: <b>${etiquetas.length}</b> etiquetados`,
+    `«No sé»: <b>${noSe}</b> (${(100 * noSe / n).toFixed(1)} %; la guía pide menos de 5 %)`,
+    `Fuera de la taxonomía: <b>${fuera}</b>`,
+    `Variantes: <b>${variantes}</b>`,
+  ];
+  // Acuerdo rápido de la ronda de consistencia; el porcentaje y el kappa oficiales se calculan en Python
+  const repetidos = Object.entries(estado.etiquetas[2]);
+  if (repetidos.length) {
+    const iguales = repetidos.filter(([clave, e]) => (estado.etiquetas[1][clave] || {}).rubro === e.rubro).length;
+    partes.push(`Consistencia: <b>${iguales}</b> de ${repetidos.length} iguales (${(100 * iguales / repetidos.length).toFixed(0)} %)`);
+  }
+  $("resumen").innerHTML = partes.map((t) => `<span>${t}</span>`).join("");
+}
+
+// ---------- teclado y botones ----------
+
+$("buscar").addEventListener("input", () => { activo = 0; mostrarRubros(); });
+$("buscar").addEventListener("keydown", (ev) => {
+  if (ev.key === "ArrowDown" && resultados.length) { activo = (activo + 1) % resultados.length; mostrarRubros(); ev.preventDefault(); }
+  else if (ev.key === "ArrowUp" && resultados.length) { activo = (activo - 1 + resultados.length) % resultados.length; mostrarRubros(); ev.preventDefault(); }
+  else if (ev.key === "Enter" && resultados.length) { etiquetar(resultados[activo].rubro); ev.preventDefault(); }
+  else if (ev.key === "Escape") { $("buscar").value = ""; activo = 0; mostrarRubros(); }
+});
+document.addEventListener("keydown", (ev) => {
+  if (ev.target === $("nota")) return;
+  if (ev.key === "PageDown") { ir(estado.indice + 1); ev.preventDefault(); }
+  else if (ev.key === "PageUp") { ir(estado.indice - 1); ev.preventDefault(); }
+});
+$("variante").addEventListener("change", actualizarDetalle);
+$("nota").addEventListener("change", actualizarDetalle);
+$("nota").addEventListener("keydown", (ev) => { if (ev.key === "Enter") $("buscar").focus(); });
+$("no-se").onclick = () => etiquetar("no_se");
+$("fuera").onclick = () => etiquetar("fuera_taxonomia");
+$("anterior").onclick = () => ir(estado.indice - 1);
+$("siguiente").onclick = () => ir(estado.indice + 1);
+$("sin-etiquetar").onclick = primeroSinEtiquetar;
+$("ronda").onclick = cambiarRonda;
+$("conectar").onclick = abrirArchivo;
+$("crear").onclick = crearArchivo;
+$("descargar").onclick = descargar;
+window.addEventListener("beforeunload", (ev) => {
+  // Sin archivo conectado, recordar que lo único guardado está en el navegador
+  if (!archivo && etiquetados(1) > 0) { ev.preventDefault(); ev.returnValue = ""; }
+});
+
+// ---------- inicio ----------
+
+fetch("productos.json")
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then((datos) => {
+    rubros = datos.rubros;
+    listas[1] = datos.productos.slice().sort((a, b) => a.orden - b.orden);
+    listas[2] = mezclar(listas[1].filter((p) => p.repetir), 20261022);
+    leerLocal();
+    if (!listas[estado.ronda][estado.indice]) { estado.ronda = 1; estado.indice = 0; }
+    $("carga").hidden = true;
+    $("principal").hidden = false;
+    mostrarGuardado();
+    mostrar();
+  })
+  .catch((e) => {
+    $("carga").textContent = "No se pudo leer productos.json (" + e.message + "). Corré primero " +
+      "python -m scripts.elegir_muestra_etiquetado y serví la carpeta con " +
+      "python -m http.server 8001 --directory etiquetado";
+  });
+</script>
+</body>
+</html>

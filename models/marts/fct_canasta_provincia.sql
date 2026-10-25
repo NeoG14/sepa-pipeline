@@ -1,18 +1,21 @@
--- Canasta por provincia: ranking del día de las cadenas de cada provincia.
+-- Canasta por provincia: ranking del día de las cadenas de cada provincia, con un índice de precios.
 --
--- En las provincias no todas las cadenas tienen los 31 productos (el 20/10, 43 de 99
--- combinaciones estaban completas), así que se compara sobre los productos que tienen todas las
--- cadenas de esa provincia ese día. El conjunto cambia por provincia y por día: sirve para
+-- Productos: los de fct_canasta_provincia_productos, todos los códigos de barras que tienen TODAS las
+-- cadenas de la provincia ese día con un precio representativo (el 21/10: 591 en Buenos Aires, con 7
+-- cadenas, y miles donde hay 2). Antes eran solo los de la canasta fija de 31 que tenían todas (de 19 a 31): muy pocos para
+-- ordenar las cadenas del medio. Medido con scripts/medir_canasta_provincial.py.
+--
+-- Índice: en cada producto, el precio de la cadena dividido por la mediana de ese producto entre las
+-- cadenas de la provincia; después, la media geométrica por cadena. Cada producto pesa lo mismo, sea
+-- caro o barato, y un error en un solo producto mueve poco el resultado. 1 = la mediana; 0,973 =
+-- 2,7 % por debajo. `diferencia` es cuánto más cara que la más barata (0 = la más barata). `total`,
+-- la suma de los precios, queda como referencia: no ordena.
+--
+-- El conjunto de productos cambia por provincia y por día (los martes DIA informa menos): sirve para
 -- comparar cadenas dentro de una provincia en una fecha, no provincias entre sí ni una serie de
--- tiempo. Se arma con los días que guarda el agregado diario (21).
-with canasta as (
-    select distinct ltrim(ean, '0') as clave from {{ ref('canasta') }}
-),
-
-precios as (
-    select fecha, provincia, id_comercio, ltrim(id_producto, '0') as clave, precio_lista_mediana
-    from {{ ref('int_precios_dia') }}
-    where ltrim(id_producto, '0') in (select clave from canasta)
+-- tiempo; para eso está la canasta nacional fija. Se arma con los días que guarda el agregado diario.
+with precios as (
+    select * from {{ ref('int_canasta_provincia_precios') }}
 ),
 
 cadenas as (
@@ -21,31 +24,25 @@ cadenas as (
     group by fecha, provincia
 ),
 
--- Productos que tienen todas las cadenas de la provincia ese día
-comunes as (
-    select p.fecha, p.provincia, p.clave
-    from precios p
-    join cadenas c using (fecha, provincia)
-    group by p.fecha, p.provincia, p.clave, c.cadenas
-    having count(distinct p.id_comercio) = c.cadenas
-),
-
-totales as (
+por_cadena as (
     select p.fecha, p.provincia, p.id_comercio,
-           count(*)                    as productos_comparados,
-           sum(p.precio_lista_mediana) as total
+           count(*)                            as productos_comparados,
+           exp(avg(ln(p.precio / m.mediana)))  as indice,
+           sum(p.precio)                       as total
     from precios p
-    join comunes using (fecha, provincia, clave)
+    join {{ ref('fct_canasta_provincia_productos') }} m using (fecha, provincia, clave)
     group by p.fecha, p.provincia, p.id_comercio
 )
 
 select
-    t.fecha,
-    t.provincia,
-    t.id_comercio,
+    p.fecha,
+    p.provincia,
+    p.id_comercio,
     c.cadenas,
-    t.productos_comparados,
-    t.total,
-    rank() over (partition by t.fecha, t.provincia order by t.total) as puesto
-from totales t
+    p.productos_comparados,
+    round(p.indice, 6)                                                               as indice,
+    round(p.indice / min(p.indice) over (partition by p.fecha, p.provincia) - 1, 6)  as diferencia,
+    round(p.total, 2)                                                                as total,
+    rank() over (partition by p.fecha, p.provincia order by p.indice)                as puesto
+from por_cadena p
 join cadenas c using (fecha, provincia)

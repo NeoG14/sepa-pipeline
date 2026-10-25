@@ -31,6 +31,7 @@ models:
       - name: ultima_fecha_vista
         data_tests:
           - not_null
+
   - name: dim_productos
     description: >
       Un producto por clave (EAN sin ceros o "comercio-código"), con nombre, marca y texto de
@@ -46,7 +47,7 @@ models:
       - name: cadenas
         data_tests:
           - not_null
-  
+
   - name: fct_canasta_nacional
     description: >
       Canasta nacional por fecha y cadena: productos observados y arrastrados (último precio de
@@ -60,19 +61,61 @@ models:
         data_tests:
           - not_null
 
+  - name: fct_canasta_provincia_productos
+    description: >
+      Los productos con que se compara cada provincia cada día: los códigos de barras que tienen
+      todas las cadenas de la provincia, con su mediana entre cadenas. Base de fct_canasta_provincia
+      y de la lista de productos del sitio.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || provincia || '|' || clave"
+    columns:
+      - name: mediana
+        data_tests:
+          - not_null
+
   - name: fct_canasta_provincia
     description: >
-      Ranking del día de las cadenas en cada provincia, sobre los productos de la canasta que
-      tienen todas las cadenas de esa provincia ese día.
+      Ranking del día de las cadenas en cada provincia, con un índice de precios (media geométrica
+      del precio relativo a la mediana) sobre todos los códigos de barras que tienen todas las
+      cadenas de esa provincia ese día.
     data_tests:
       - unique:
           arguments:
             column_name: "fecha || '|' || provincia || '|' || id_comercio"
     columns:
-      - name: total
+      - name: indice
         data_tests:
           - not_null
-  
+      - name: diferencia
+        data_tests:
+          - not_null
+
+  - name: fct_canasta_provincia_grupo
+    description: >
+      Ranking de cadenas por grupo de producto en cada provincia, solo del último día. Misma fórmula
+      que fct_canasta_provincia sobre los productos de la comparación de cada grupo; solo grupos con
+      al menos 30 productos por cadena.
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "fecha || '|' || provincia || '|' || grupo || '|' || id_comercio"
+    columns:
+      - name: grupo
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('rubros')
+                field: grupo
+      - name: indice
+        data_tests:
+          - not_null
+      - name: productos_comparados
+        data_tests:
+          - not_null
+
   - name: fct_cobertura
     description: >
       Cobertura de cada cadena por provincia y día contra la mediana de los 28 días anteriores.
@@ -85,3 +128,15 @@ models:
       - name: cobertura_baja
         data_tests:
           - not_null
+          
+  - name: fct_precio_kilo_provincia
+    description: >
+      Precio por kilo de los productos cotidianos que se venden al peso, por cadena y provincia, último día de
+      cada provincia. Qué producto es cada pesable sale de la seed pesables_producto.
+    columns:
+      - name: producto
+        data_tests: [not_null]
+      - name: precio_kg
+        data_tests: [not_null]
+      - name: productos
+        data_tests: [not_null]
