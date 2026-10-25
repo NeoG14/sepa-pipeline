@@ -290,7 +290,6 @@ async function mostrarEvolucion() {
   if (seccion.hidden) { estado.graficos.evolucion?.destroy(); return; }
   const nombre = PROVINCIAS[codigo];
   // El índice parte de 100 el primer día; en el gráfico se muestra como cambio acumulado: 0 % el primer día
-  $("evolucion-resumen").textContent = `Cuánto subió o bajó el precio de cada cadena desde el ${fecha(primero)}.`;
   $("evolucion-nota").textContent =
     `Cada día se compara el precio de lista de cada cadena en ${nombre} con el del día anterior, producto por producto, y los cambios se acumulan. ` +
     "Todos los productos con código de barras pesan lo mismo, sea caro o barato. No dice cuál cadena es más barata, sino cuánto cambió el precio de cada una. " +
@@ -304,10 +303,10 @@ async function mostrarEvolucion() {
   const compra = v => "$\u00a0" + (Math.round(100000 * (1 + v / 100) / 100) * 100).toLocaleString("es-AR");
   $("evolucion-cifra-valor").textContent = cambioTexto(mediana, 1);
   $("evolucion-cifra-texto").textContent = m === 1
-    ? `cambió el precio de la única cadena con datos en ${nombre} entre el ${fecha(primero)} y el ${fecha(ultimo)}.`
-    : `es la mediana de las ${m} cadenas de ${nombre} entre el ${fecha(primero)} y el ${fecha(ultimo)}.`;
+    ? `cambió el precio de la única cadena con datos en ${nombre}.`
+    : `es el cambio mediano de precios de las ${m} cadenas de ${nombre}, del ${fecha(primero)} al ${fecha(ultimo)}.`;
   $("evolucion-compra").replaceChildren(
-    document.createTextNode(`Una compra que el ${fecha(primero)} costaba $\u00a0100.000, el ${fecha(ultimo)} cuesta unos `),
+    document.createTextNode(`Lo que el ${fecha(primero)} costaba $\u00a0100.000, el ${fecha(ultimo)} cuesta unos `),
     elemento("strong", null, compra(mediana)), document.createTextNode("."));
   $("evolucion-col-cambio").textContent = `Desde el ${fecha(primero)}`;
   $("evolucion-col-compra").textContent = "Compra de $\u00a0100.000";

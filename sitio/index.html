@@ -48,16 +48,17 @@
 
       <section class="canasta-evolucion" id="canasta-evolucion" aria-labelledby="evolucion-titulo" hidden>
         <h2 id="evolucion-titulo">¿Cuánto cambiaron los precios en <span class="nombre-provincia"></span>?</h2>
-        <p class="bajada-chica" id="evolucion-resumen"></p>
-        <div class="evolucion-cifra">
-          <span class="cifra" id="evolucion-cifra-valor"></span>
-          <span class="cifra-texto" id="evolucion-cifra-texto"></span>
+        <div class="evolucion-cuerpo">
+          <div class="evolucion-cifra">
+            <span class="cifra" id="evolucion-cifra-valor"></span>
+            <span class="cifra-texto" id="evolucion-cifra-texto"></span>
+            <p class="evolucion-compra" id="evolucion-compra"></p>
+          </div>
+          <div class="tabla-deslizable"><table class="tabla-evolucion">
+            <thead><tr><th>Cadena</th><th class="num" id="evolucion-col-cambio"></th><th class="num" id="evolucion-col-compra"></th></tr></thead>
+            <tbody id="evolucion-lista"></tbody>
+          </table></div>
         </div>
-        <p class="evolucion-compra" id="evolucion-compra"></p>
-        <div class="tabla-deslizable"><table class="tabla-evolucion">
-          <thead><tr><th>Cadena</th><th class="num" id="evolucion-col-cambio"></th><th class="num" id="evolucion-col-compra"></th></tr></thead>
-          <tbody id="evolucion-lista"></tbody>
-        </table></div>
         <div class="filtros-cadenas"><span class="nota">Tocá una cadena para ocultarla o mostrarla en el gráfico</span><div class="filtros" id="evolucion-cadenas"></div></div>
         <div class="grafico alto"><canvas id="grafico-evolucion" role="img" aria-label="Cambio acumulado del precio en cada cadena desde el primer día"></canvas></div>
         <div class="panel-dia" id="evolucion-dia" aria-live="polite"></div>
